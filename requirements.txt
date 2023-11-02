@@ -4,4 +4,3 @@ pandas
 streamlit_agraph
 st-annotated-text
 treelib
-itertools
