@@ -19,6 +19,9 @@ st.markdown(
     '''
 )
 
+st.markdown('---')
+st.subheader('Attribute Description')
+
 st.markdown(
     '''
     However, one needs an explanation of the attributes.
@@ -97,6 +100,9 @@ edges.append(Edge(source='Health and Social Factors', target='Doctors accessibil
 
 config = Config(directed=True,  hierarchical=True)
 
+st.markdown('---')
+st.subheader('DEX Model')
+
 return_value = agraph(nodes = nodes, edges = edges, config = config)
 
 st.markdown(
@@ -144,6 +150,8 @@ def highlight_cols(s, coldict):
     return [''] * len(s)
 
 st.table(df.style.apply(highlight_cols, coldict=coldict))
+
+st.markdown('---')
 
 st.markdown(
     '''

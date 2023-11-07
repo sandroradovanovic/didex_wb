@@ -112,7 +112,9 @@ elif (selected_lsgs != []) & (selected_years != []):
     df_im_s = df_im_s.loc[df_im_s['Area Name'].isin(selected_lsgs), :]
     df_im_s = df_im_s.loc[df_im_s['Time Period'].isin(selected_years), :]
 
-st.table(df_im_s.style.applymap(lambda x: highlight_vehicle_density(x), subset=['Vehicles Density']).applymap(lambda x: highlight_motorcycle_density(x), subset=['Motorcycle Density']).applymap(lambda x: highlight_main_road_acc(x), subset=['Main Roads Accessibility']).applymap(lambda x: highlight_local_roads_den(x), subset=['Local Roads Density']).applymap(lambda x: highlight_prim_school(x), subset=['Primary School Attendance']).applymap(lambda x: highlight_sec_school(x), subset=['Secondary School Attendance']).applymap(lambda x: highlight_assistance(x), subset=['Assistance and Care Allowance Share']).applymap(lambda x: highlight_poverty(x), subset=['Poverty Share']).applymap(lambda x: highlight_doctors_acc(x), subset=['Doctors Accessibility']).applymap(lambda x: highlight_net_migrations(x), subset=['Net Migrations per 1000 inhabitants']))
+st.markdown("---")
+
+st.table(df_im_s.head(10).style.applymap(lambda x: highlight_vehicle_density(x), subset=['Vehicles Density']).applymap(lambda x: highlight_motorcycle_density(x), subset=['Motorcycle Density']).applymap(lambda x: highlight_main_road_acc(x), subset=['Main Roads Accessibility']).applymap(lambda x: highlight_local_roads_den(x), subset=['Local Roads Density']).applymap(lambda x: highlight_prim_school(x), subset=['Primary School Attendance']).applymap(lambda x: highlight_sec_school(x), subset=['Secondary School Attendance']).applymap(lambda x: highlight_assistance(x), subset=['Assistance and Care Allowance Share']).applymap(lambda x: highlight_poverty(x), subset=['Poverty Share']).applymap(lambda x: highlight_doctors_acc(x), subset=['Doctors Accessibility']).applymap(lambda x: highlight_net_migrations(x), subset=['Net Migrations per 1000 inhabitants']))
 
 # st.markdown(
 #     '''
