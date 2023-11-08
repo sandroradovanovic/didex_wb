@@ -6,3 +6,4 @@ st-annotated-text
 treelib
 plotly
 plotly-express
+geopandas

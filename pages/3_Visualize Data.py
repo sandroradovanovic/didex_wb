@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import geopandas as gpd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
@@ -18,6 +19,10 @@ st.markdown(
 
 df_im = pd.read_csv('data/im.csv')
 df_im_bin = pd.read_csv('data/im_bin.csv')
+
+gj = gpd.read_file('util/Opstina_l.geojson')
+df_im_c = df_im.copy()
+df_im_c['Area Name'] = df_im_c['Area Name'].str.upper()
 
 LSGs = np.unique(df_im['Area Name'])
 years = np.unique(df_im['Time Period'])
@@ -74,4 +79,42 @@ dd['Area Name'] = 'Serbia - Average'
 df_im_s = pd.concat([df_im_s, dd])
 
 fig = px.line(df_im_s, x="Time Period", y=selected_att, color='Area Name')
+st.plotly_chart(fig)
+
+st.markdown('---')
+st.subheader('Map Visualization')
+
+st.markdown('Please find below the map where one can visualize input attributes and observe the values on the map.')
+
+selected_year_map = st.selectbox(label='Please select year', options=years, key=23, index=9)
+selected_att_map = st.selectbox(label='Please select attribute', options=attributes, key=22, index=9)
+
+df_im_c = df_im_c.loc[df_im_c['Time Period'] == selected_year_map, :]
+gj.merge(df_im, left_on='opstina_imel', right_on='Area Name')
+
+
+if selected_att_map == 'Net Migrations per 1000 inhabitants':
+    aa = df_im_c[selected_att_map]
+    sorted_data = np.sort(aa)
+    position = np.searchsorted(sorted_data, 0)
+    percentile = (position / len(sorted_data))
+
+    custom_color_scale = [
+        (0, 'red'),
+        (percentile, 'white'),
+        (1, 'green')
+    ]
+else:
+    custom_color_scale = [
+        (0, 'red'),
+        (0.5, 'white'),
+        (1, 'green')
+    ]
+
+fig = px.choropleth(data_frame=df_im_c, geojson=gj,
+                    featureidkey='properties.opstina_imel',
+                    locations='Area Name', 
+                    color_continuous_scale=custom_color_scale,
+                    color=selected_att_map)
+fig.update_geos(fitbounds = 'locations', visible=False)
 st.plotly_chart(fig)
