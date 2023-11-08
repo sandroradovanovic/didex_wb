@@ -116,6 +116,6 @@ fig = px.choropleth(data_frame=df_im_c, geojson=gj,
                     locations='Area Name', 
                     color_continuous_scale=custom_color_scale,
                     color=selected_att_map, 
-                    height=700)
+                    height=700, width=700)
 fig.update_geos(fitbounds = 'locations', visible=False)
 st.plotly_chart(fig)
