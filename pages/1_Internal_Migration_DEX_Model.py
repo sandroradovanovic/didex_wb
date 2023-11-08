@@ -3,9 +3,9 @@ from streamlit_agraph import agraph, Node, Edge, Config
 
 import pandas as pd
 
-st.set_page_config(layout='wide', page_title = 'Internal Migration DEX Model')
+st.set_page_config(layout='wide', page_title = 'Net Internal Migration DEX Model')
 
-st.title('DEX Models for Internal Migration')
+st.title('DEX Models for Net Internal Migration')
 
 st.markdown(
     '''

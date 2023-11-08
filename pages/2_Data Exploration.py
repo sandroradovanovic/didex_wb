@@ -2,9 +2,9 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-st.set_page_config(layout='wide', page_title = 'Internal Migration Data Exploration')
+st.set_page_config(layout='wide', page_title = 'Net Internal Migration Data Exploration')
 
-st.title('Internal Migration Data Exploration')
+st.title('Net Internal Migration Data Exploration')
 
 st.markdown(
     '''
