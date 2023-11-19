@@ -15,8 +15,6 @@ st.markdown(
 )
 
 df_im = pd.read_csv('data/im.csv')
-df_im_bin = pd.read_csv('data/im_bin.csv')
-
 LSGs = np.unique(df_im['Area Name'])
 years = np.unique(df_im['Time Period'])
 
@@ -115,12 +113,17 @@ elif (selected_lsgs != []) & (selected_years != []):
 st.markdown("---")
 
 st.table(df_im_s.head(10).style.applymap(lambda x: highlight_vehicle_density(x), subset=['Vehicles Density']).applymap(lambda x: highlight_motorcycle_density(x), subset=['Motorcycle Density']).applymap(lambda x: highlight_main_road_acc(x), subset=['Main Roads Accessibility']).applymap(lambda x: highlight_local_roads_den(x), subset=['Local Roads Density']).applymap(lambda x: highlight_prim_school(x), subset=['Primary School Attendance']).applymap(lambda x: highlight_sec_school(x), subset=['Secondary School Attendance']).applymap(lambda x: highlight_assistance(x), subset=['Assistance and Care Allowance Share']).applymap(lambda x: highlight_poverty(x), subset=['Poverty Share']).applymap(lambda x: highlight_doctors_acc(x), subset=['Doctors Accessibility']).applymap(lambda x: highlight_net_migrations(x), subset=['Net Migrations per 1000 inhabitants']))
-
-# st.markdown(
-#     '''
-#     Please find the data profile below.
-#     '''
-# )
-
-# pr = df_im_s.profile_report()
-# st_profile_report(pr)
+st.markdown(
+    '''
+- Motorcycle Density - (Number of mopeds + Number of bikes) / Total Surface area (km^2)
+- Doctors Accessibility - 1000 * Number of doctors / Total Population 
+- Vehicles Density - Number of passenger vehicles / Total Surface area
+- Primary School Attendance - Total number of children age 7-14 / Total number of Primary schools
+- Secondary School Attendance - Total number of children age 14-18 / Total number of Secondary schools
+- Assistance and Care Allowance Share - Number of inhabitants using assistance and care allowance / Total popuation
+- Poverty Share - Number of social protection beneficiaries / Total popuation
+- Local Roads Density - Amount of local roads (km) / Total Surface area (km^2)
+- Main Roads Accessibility - 1000 * Length of main road segments (km) / Total Population
+- Net Migrations per 1000 inhabitants - 1000 * (Recorded immigrations - Recorded emigrations) / Total Population
+    '''
+)

@@ -5,9 +5,9 @@ import numpy as np
 
 import dex_model as dm
 
-st.set_page_config(layout='wide', page_title = 'Historical Net Interal Migration Policy Potential')
+st.set_page_config(layout='wide', page_title = 'Historical Net Interal Migration Policy Outcomes')
 
-st.title('Historical Net Interal Migration Policy Potential')
+st.title('Historical Net Interal Migration Policy Outcomes')
 
 df_im = pd.read_csv('data/im.csv')
 df_im['Vehicles Density'] = pd.cut(df_im['Vehicles Density'], bins=[0, 10.272, 21.286, 99999999], labels=['1', '2', '3']).astype(str)
@@ -35,14 +35,95 @@ st.subheader('Values')
 
 st.table(df_mun.head(10))
 
+
+
 st.markdown('---')
 st.subheader('Prediction Outcome')
 
 if df_mun.shape[0] == 0:
     st.markdown("We don't have data for the selected municipality and the selected year")
 else:
-    st.markdown('Please find below the projected outcome and the potential interventions:')
+    pred = dm.d.predict(df_mun, return_intermediate=True)
 
+    col11, col21 = st.columns(2)
+    col12, col22 = st.columns(2)
+    col13, col23 = st.columns(2)
+    col14, col24 = st.columns(2)
+    col15, col25 = st.columns(2)
+    col16, col26 = st.columns(2)
+    col17, col27 = st.columns(2)
+    col18, col28 = st.columns(2)
+    col19, col29 = st.columns(2)
+    col110, col210 = st.columns(2)
+    col111, col211 = st.columns(2)
+    col112, col212 = st.columns(2)
+    col113, col213 = st.columns(2)
+    col114, col214 = st.columns(2)
+    col115, col215 = st.columns(2)
+
+    with col11:
+        st.markdown('Vehicles Density')
+    with col12:
+        st.markdown('Motorcycle Density')
+    with col13:
+        st.markdown('Vehicles Density and Motorcycle Density lead to - **Vehicles**')
+    with col14:
+        st.markdown('Main Roads Accessibility')
+    with col15:
+        st.markdown('Local Roads Density')
+    with col16:
+        st.markdown('Main Roads Accessibility and Local Roads Density lead to - **Roads**')
+    with col17:
+        st.markdown('Primary School Attendance')
+    with col18:
+        st.markdown('Secondary School Attendance')
+    with col19:
+        st.markdown('Primary School Attendance and Secondary School Attendance lead to - **School**')
+    with col110:
+        st.markdown('Assistance and Care Allowance Share')
+    with col111:
+        st.markdown('Poverty Share')
+    with col112:
+        st.markdown('Assistance and Care Allowance Share and Poverty Share lead to - **Social Factors**')
+    with col113:
+        st.markdown('Doctors Accessibility')
+    with col114:
+        st.markdown('Social Factors and Doctors Accessibility lead to - **Health and Social Factors**')
+    with col115:
+        st.markdown('Schools and Health and Social Factors lead to - **Social Determinants**')
+
+    with col21:
+        annotated_text((pred['Vehicles Density'], '', pred['Vehicles Density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+    with col22:
+        annotated_text((pred['Motorcycle Density'], '', pred['Motorcycle Density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+    with col23:
+        annotated_text((pred['Vehicles'], '', pred['Vehicles'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+    with col24:
+        annotated_text((pred['Main Roads Accessibility'], '', pred['Main Roads Accessibility'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
+    with col25:
+        annotated_text((pred['Local Roads Density'], '', pred['Local Roads Density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+    with col26:
+        annotated_text((pred['Roads'], '', pred['Roads'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+    with col27:
+        annotated_text((pred['Primary School Attendance'], '', pred['Primary School Attendance'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+    with col28:
+        annotated_text((pred['Secondary School Attendance'], '', pred['Secondary School Attendance'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+    with col29:
+        annotated_text((pred['School'], '', pred['School'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+    with col210:
+        annotated_text((pred['Assistance and Care Allowance Share'], '', pred['Assistance and Care Allowance Share'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
+    with col211:
+        annotated_text((pred['Poverty Share'], '', pred['Poverty Share'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
+    with col212:
+        annotated_text((pred['Social Factors'], '', pred['Social Factors'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+    with col213:
+        annotated_text((pred['Doctors Accessibility'], '', pred['Doctors Accessibility'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+    with col214:
+        annotated_text((pred['Health and Social Factors'], '', pred['Health and Social Factors'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+    with col215:
+        annotated_text((pred['Social Determinants'], '', pred['Social Determinants'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+
+    st.markdown('**The predicted outcome is:**')
     prediction = dm.d.predict(df_mun).values[0].replace('1', 'Poor').replace('2', 'Medium').replace('3', 'Good')
     if prediction == 'Poor':
         annotated_text((prediction, '', 'red'))
@@ -53,6 +134,8 @@ else:
     else:
         annotated_text((prediction, '', 'gray'))
         st.markdown('This model signals the emigration (between 0 and 4 persons on 1,000 inhabitants) from the municipality')
+
+    st.markdown('Please find below the projected outcome and the potential interventions:')
 
     st.markdown('---')
     st.subheader('Possible Interventions')

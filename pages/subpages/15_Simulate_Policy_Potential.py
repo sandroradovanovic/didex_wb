@@ -19,6 +19,7 @@ df_im = pd.read_csv('data/im.csv')
 LSGs = np.unique(df_im['Area Name'])
 
 selected_lsg = st.selectbox(label='Please select municipality', options=LSGs)
+df_year = df_im.loc[(df_im['Time Period'] == 2021), :]
 df_mun = df_im.loc[(df_im['Area Name'] == selected_lsg) & (df_im['Time Period'] == 2021), :]
 
 st.markdown('---')
@@ -57,88 +58,103 @@ with col110:
     doctors_acc = st.number_input(label='Doctors Accessibility', value = 0 if np.isnan(df_mun['Doctors Accessibility'].values[0]) else df_mun['Doctors Accessibility'].values[0])
 
 with col21:
-    st.markdown('This area shows the value of the attribute for the selected municipality in 2021')
+    st.markdown(
+        '''
+        This area shows the value of the attribute for the selected municipality in 2021. 
+        
+        (Values within the brackets represent the average value of municipalities for the selected attribute)
+        '''
+    )
 
 with col22:
     st.markdown('Vehicles Density:')
     if df_mun['Vehicles Density'].values[0] <= 10.272:
-        annotated_text((f"{df_mun['Vehicles Density'].values[0]}", '', 'red'))
+        annotated_text((f"{round(df_mun['Vehicles Density'].values[0], 3)}", '', 'red'))
     elif df_mun['Vehicles Density'].values[0] > 21.286:
-        annotated_text((f"{df_mun['Vehicles Density'].values[0]}", '', 'lightgreen'))
+        annotated_text((f"{round(df_mun['Vehicles Density'].values[0], 3)}", '', 'lightgreen'))
     else:
-        st.markdown(f"{0 if np.isnan(df_mun['Vehicles Density'].values[0]) else df_mun['Motorcycle Density'].values[0]}")
+        st.markdown(f"{0 if np.isnan(round(df_mun['Vehicles Density'].values[0], 3)) else round(df_mun['Vehicles Density'].values[0], 3)}")
+    annotated_text((f'({round(df_year["Vehicles Density"].mean(), 3)})', 'Serbia', ''))
 
 with col23:
     st.markdown('Motorcycle Density:')
     if df_mun['Motorcycle Density'].values[0] <= 0.281:
-        annotated_text((f"{df_mun['Motorcycle Density'].values[0]}", '', 'red'))
+        annotated_text((f"{round(df_mun['Motorcycle Density'].values[0], 3)}", '', 'red'))
     elif df_mun['Motorcycle Density'].values[0] > 0.762:
-        annotated_text((f"{df_mun['Motorcycle Density'].values[0]}", '', 'lightgreen'))
+        annotated_text((f"{round(df_mun['Motorcycle Density'].values[0], 3)}", '', 'lightgreen'))
     else:
-        st.markdown(f"{0 if np.isnan(df_mun['Motorcycle Density'].values[0]) else df_mun['Motorcycle Density'].values[0]}")
+        st.markdown(f"{0 if np.isnan(round(df_mun['Motorcycle Density'].values[0], 3)) else round(df_mun['Motorcycle Density'].values[0], 3)}")
+    annotated_text((f'({round(df_year["Motorcycle Density"].mean(), 3)})', 'Serbia', ''))
 
 with col24:
     st.markdown('Main Roads Accessibility:')
     if df_mun['Main Roads Accessibility'].values[0] > 1.676:
-        annotated_text((f"{df_mun['Main Roads Accessibility'].values[0]}", '', 'red'))
+        annotated_text((f"{round(df_mun['Main Roads Accessibility'].values[0], 3)}", '', 'red'))
     elif df_mun['Main Roads Accessibility'].values[0] <= 0.693:
-        annotated_text((f"{df_mun['Main Roads Accessibility'].values[0]}", '', 'lightgreen'))
+        annotated_text((f"{round(df_mun['Main Roads Accessibility'].values[0], 3)}", '', 'lightgreen'))
     else:
-        st.markdown(f"{0 if np.isnan(df_mun['Main Roads Accessibility'].values[0]) else df_mun['Main Roads Accessibility'].values[0]}")
+        st.markdown(f"{0 if np.isnan(round(df_mun['Main Roads Accessibility'].values[0], 3)) else round(df_mun['Main Roads Accessibility'].values[0], 3)}")
+    annotated_text((f'({round(df_year["Main Roads Accessibility"].mean(), 3)})', 'Serbia', ''))
     
 with col25:
     st.markdown('Local Roads Density:')
     if df_mun['Local Roads Density'].values[0] <= 107.736:
-        annotated_text((f"{df_mun['Local Roads Density'].values[0]}", '', 'red'))
+        annotated_text((f"{round(df_mun['Local Roads Density'].values[0], 3)}", '', 'red'))
     elif df_mun['Local Roads Density'].values[0] > 450.854:
-        annotated_text((f"{df_mun['Local Roads Density'].values[0]}", '', 'lightgreen'))
+        annotated_text((f"{round(df_mun['Local Roads Density'].values[0], 3)}", '', 'lightgreen'))
     else:
-        st.markdown(f"{0 if np.isnan(df_mun['Local Roads Density'].values[0]) else df_mun['Local Roads Density'].values[0]}")
+        st.markdown(f"{0 if np.isnan(round(df_mun['Local Roads Density'].values[0], 3)) else round(df_mun['Local Roads Density'].values[0], 3)}")
+    annotated_text((f'({round(df_year["Local Roads Density"].mean(), 3)})', 'Serbia', ''))
 
 with col26:
     st.markdown('Primary School Attendance:')
     if df_mun['Primary School Attendance'].values[0] <= 365.412:
-        annotated_text((f"{df_mun['Primary School Attendance'].values[0]}", '', 'red'))
+        annotated_text((f"{round(df_mun['Primary School Attendance'].values[0], 3)}", '', 'red'))
     elif df_mun['Primary School Attendance'].values[0] > 590.641:
-        annotated_text((f"{df_mun['Primary School Attendance'].values[0]}", '', 'lightgreen'))
+        annotated_text((f"{round(df_mun['Primary School Attendance'].values[0], 3)}", '', 'lightgreen'))
     else:
-        st.markdown(f"{0 if np.isnan(df_mun['Primary School Attendance'].values[0]) else df_mun['Primary School Attendance'].values[0]}")
+        st.markdown(f"{0 if np.isnan(round(df_mun['Primary School Attendance'].values[0], 3)) else round(df_mun['Primary School Attendance'].values[0], 3)}")
+    annotated_text((f'({round(df_year["Primary School Attendance"].mean(), 3)})', 'Serbia', ''))
     
 with col27:
     st.markdown('Secondary School Attendance:')
     if df_mun['Secondary School Attendance'].values[0] <= 269.804:
-        annotated_text((f"{df_mun['Secondary School Attendance'].values[0]}", '', 'red'))
+        annotated_text((f"{round(df_mun['Secondary School Attendance'].values[0], 3)}", '', 'red'))
     elif df_mun['Secondary School Attendance'].values[0] > 435.033:
-        annotated_text((f"{df_mun['Secondary School Attendance'].values[0]}", '', 'lightgreen'))
+        annotated_text((f"{round(df_mun['Secondary School Attendance'].values[0], 3)}", '', 'lightgreen'))
     else:
-        st.markdown(f"{0 if np.isnan(df_mun['Secondary School Attendance'].values[0]) else df_mun['Secondary School Attendance'].values[0]}")
+        st.markdown(f"{0 if np.isnan(round(df_mun['Secondary School Attendance'].values[0], 3)) else round(df_mun['Secondary School Attendance'].values[0], 3)}")
+    annotated_text((f'({round(df_year["Secondary School Attendance"].mean(), 3)})', 'Serbia', ''))
     
 with col28:
     st.markdown('Assistance and Care Allowance Share:')
     if df_mun['Assistance and Care Allowance Share'].values[0] > 0.6:
-        annotated_text((f"{df_mun['Assistance and Care Allowance Share'].values[0]}", '', 'red'))
+        annotated_text((f"{round(df_mun['Assistance and Care Allowance Share'].values[0], 3)}", '', 'red'))
     elif df_mun['Assistance and Care Allowance Share'].values[0] <= 0.5:
-        annotated_text((f"{df_mun['Assistance and Care Allowance Share'].values[0]}", '', 'lightgreen'))
+        annotated_text((f"{round(df_mun['Assistance and Care Allowance Share'].values[0], 3)}", '', 'lightgreen'))
     else:
-        st.markdown(f"{0 if np.isnan(df_mun['Assistance and Care Allowance Share'].values[0]) else df_mun['Assistance and Care Allowance Share'].values[0]}")
+        st.markdown(f"{0 if np.isnan(round(df_mun['Assistance and Care Allowance Share'].values[0], 3)) else round(df_mun['Assistance and Care Allowance Share'].values[0], 3)}")
+    annotated_text((f'({round(df_year["Assistance and Care Allowance Share"].mean(), 3)})', 'Serbia', ''))
     
 with col29:
     st.markdown('Poverty Share:')
     if df_mun['Poverty Share'].values[0] > 12.9:
-        annotated_text((f"{df_mun['Poverty Share'].values[0]}", '', 'red'))
+        annotated_text((f"{round(df_mun['Poverty Share'].values[0], 3)}", '', 'red'))
     elif df_mun['Poverty Share'].values[0] <= 8.1:
-        annotated_text((f"{df_mun['Poverty Share'].values[0]}", '', 'lightgreen'))
+        annotated_text((f"{round(df_mun['Poverty Share'].values[0], 3)}", '', 'lightgreen'))
     else:
-        st.markdown(f"{0 if np.isnan(df_mun['Poverty Share'].values[0]) else df_mun['Poverty Share'].values[0]}")
+        st.markdown(f"{0 if np.isnan(round(df_mun['Poverty Share'].values[0], 3)) else round(df_mun['Poverty Share'].values[0], 3)}")
+    annotated_text((f'({round(df_year["Poverty Share"].mean(), 3)})', 'Serbia', ''))
     
 with col210:
     st.markdown('Doctors Accessibility:')
     if df_mun['Doctors Accessibility'].values[0] <= 1.3:
-        annotated_text((f"{df_mun['Doctors Accessibility'].values[0]}", '', 'red'))
+        annotated_text((f"{round(df_mun['Doctors Accessibility'].values[0], 3)}", '', 'red'))
     elif df_mun['Doctors Accessibility'].values[0] > 2.1:
-        annotated_text((f"{df_mun['Doctors Accessibility'].values[0]}", '', 'lightgreen'))
+        annotated_text((f"{round(df_mun['Doctors Accessibility'].values[0], 3)}", '', 'lightgreen'))
     else:
-        st.markdown(f"{0 if np.isnan(df_mun['Doctors Accessibility'].values[0]) else df_mun['Doctors Accessibility'].values[0]}")
+        st.markdown(f"{0 if np.isnan(round(df_mun['Doctors Accessibility'].values[0], 3)) else round(df_mun['Doctors Accessibility'].values[0], 3)}")
+    annotated_text((f'({round(df_year["Doctors Accessibility"].mean(), 3)})', 'Serbia', ''))
 
 with col31:
     st.markdown(
@@ -278,7 +294,89 @@ st.markdown('The prediction of the Net Internal Migrations based on the inserted
 to_predict = [v, m, mra, lra, psa, ssa, ashare, pshare, da]
 to_predict = pd.DataFrame([to_predict], columns=['Vehicles Density', 'Motorcycle Density', 'Main Roads Accessibility', 'Local Roads Density', 'Primary School Attendance', 'Secondary School Attendance', 'Assistance and Care Allowance Share', 'Poverty Share', 'Doctors Accessibility'])
 
+pred = dm.d.predict(to_predict, return_intermediate=True)
+
+col11, col21 = st.columns(2)
+col12, col22 = st.columns(2)
+col13, col23 = st.columns(2)
+col14, col24 = st.columns(2)
+col15, col25 = st.columns(2)
+col16, col26 = st.columns(2)
+col17, col27 = st.columns(2)
+col18, col28 = st.columns(2)
+col19, col29 = st.columns(2)
+col110, col210 = st.columns(2)
+col111, col211 = st.columns(2)
+col112, col212 = st.columns(2)
+col113, col213 = st.columns(2)
+col114, col214 = st.columns(2)
+col115, col215 = st.columns(2)
+
+with col11:
+    st.markdown('Vehicles Density')
+with col12:
+    st.markdown('Motorcycle Density')
+with col13:
+    st.markdown('Vehicles Density and Motorcycle Density lead to - **Vehicles**')
+with col14:
+    st.markdown('Main Roads Accessibility')
+with col15:
+    st.markdown('Local Roads Density')
+with col16:
+    st.markdown('Main Roads Accessibility and Local Roads Density lead to - **Roads**')
+with col17:
+    st.markdown('Primary School Attendance')
+with col18:
+    st.markdown('Secondary School Attendance')
+with col19:
+    st.markdown('Primary School Attendance and Secondary School Attendance lead to - **School**')
+with col110:
+    st.markdown('Assistance and Care Allowance Share')
+with col111:
+    st.markdown('Poverty Share')
+with col112:
+    st.markdown('Assistance and Care Allowance Share and Poverty Share lead to - **Social Factors**')
+with col113:
+    st.markdown('Doctors Accessibility')
+with col114:
+    st.markdown('Social Factors and Doctors Accessibility lead to - **Health and Social Factors**')
+with col115:
+    st.markdown('Schools and Health and Social Factors lead to - **Social Determinants**')
+
+with col21:
+    annotated_text((pred['Vehicles Density'], '', pred['Vehicles Density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+with col22:
+    annotated_text((pred['Motorcycle Density'], '', pred['Motorcycle Density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+with col23:
+    annotated_text((pred['Vehicles'], '', pred['Vehicles'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+with col24:
+    annotated_text((pred['Main Roads Accessibility'], '', pred['Main Roads Accessibility'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
+with col25:
+    annotated_text((pred['Local Roads Density'], '', pred['Local Roads Density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+with col26:
+    annotated_text((pred['Roads'], '', pred['Roads'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+with col27:
+    annotated_text((pred['Primary School Attendance'], '', pred['Primary School Attendance'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+with col28:
+    annotated_text((pred['Secondary School Attendance'], '', pred['Secondary School Attendance'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+with col29:
+    annotated_text((pred['School'], '', pred['School'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+with col210:
+    annotated_text((pred['Assistance and Care Allowance Share'], '', pred['Assistance and Care Allowance Share'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
+with col211:
+    annotated_text((pred['Poverty Share'], '', pred['Poverty Share'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
+with col212:
+    annotated_text((pred['Social Factors'], '', pred['Social Factors'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+with col213:
+    annotated_text((pred['Doctors Accessibility'], '', pred['Doctors Accessibility'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+with col214:
+    annotated_text((pred['Health and Social Factors'], '', pred['Health and Social Factors'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+with col215:
+    annotated_text((pred['Social Determinants'], '', pred['Social Determinants'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+
+
 prediction = dm.d.predict(to_predict).values[0].replace('1', 'Poor').replace('2', 'Medium').replace('3', 'Good')
+st.markdown('**The predicted outcome is:**')
 if prediction == 'Poor':
     annotated_text((prediction, '', 'red'))
     st.markdown('This value signals the **very high emigration** (greater than 4 persons on 1,000 inhabitants) from the municipality')
