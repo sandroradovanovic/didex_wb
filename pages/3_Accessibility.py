@@ -21,6 +21,9 @@ st.markdown(
 )
 
 df = pd.read_csv('data/accessibility_final_2.csv')
+df_time = pd.read_csv('data/time_distance_matrix.csv')
+df_time = df_time.set_index('Source')
+df_time = df_time.fillna(0.0)
 
 LSGs = np.unique(df['Area Name'])
 years = np.unique(df['Time Period'])
@@ -39,7 +42,7 @@ st.markdown(
 atts = df.columns[~df.columns.str.startswith('access_')].drop(['Time Period', 'Area Name', 'Population size - Total', 'GVA Current prices'])
 
 selected_attribute = st.multiselect('Please select the attribute you want to inspect', atts, max_selections=10)
-selected_time = st.selectbox('Please select the time distance for the :', [0, 15, 30, 45, 60], index=2)
+selected_time = st.selectbox('Please select the time distance for the :', [15, 30, 45, 60], index=2)
 
 if (selected_attribute != []) & (selected_time != []) & (selected_lsgs != []):
     st.subheader('Data Table')
@@ -52,9 +55,11 @@ if (selected_attribute != []) & (selected_time != []) & (selected_lsgs != []):
     if selected_lsgs != []:
         df_s = df.copy()
         df_s = df_s.loc[:, ['Area Name', 'Time Period', *selected_attribute, *[f'access_0_' + x for x in selected_attribute], *[f'access_{selected_time}_' + x for x in selected_attribute]]]
-        st.table(df_s.head(10))
+        df_s_tab = df_s.loc[df_s['Area Name'].isin(selected_lsgs), :]
+        st.table(df_s_tab.head(10))
 
         df_s = df_s.loc[:, ['Area Name', 'Time Period', *[f'access_{selected_time}_' + x for x in selected_attribute]]]
+        
 
         def sigmoid(z):
             return 1/(1 + np.exp(-z))
@@ -93,10 +98,18 @@ if (selected_attribute != []) & (selected_time != []) & (selected_lsgs != []):
         
         for att in selected_attribute:
             vals = (df_s[f'access_{selected_time}_{att}'].quantile([0.33]).values[0], df_s[f'access_{selected_time}_{att}'].quantile([0.66]).values[0])
-            df_s['Area Name'] = df_s['Area Name'].str.upper().str.replace(' ', '')
+        
+            opstine = []
+            for l in selected_lsgs:
+                rad_mun = df_time.loc[l, :] <= selected_time * 60
+                for o in df_time.index[rad_mun].to_list():
+                    opstine.append(o)
+            opstine = list(set(opstine))
+            df_s_s = df_s.loc[df_s['Area Name'].isin(opstine), :]
             
+            df_s_s['Area Name'] = df_s_s['Area Name'].str.upper().str.replace(' ', '')
 
-            fig = px.choropleth(data_frame=df_s, 
+            fig = px.choropleth(data_frame=df_s_s, 
                             geojson=gj,
                             featureidkey='properties.opstina_imel',
                             locations='Area Name', 
