@@ -444,8 +444,14 @@ with tab__3:
     df_im_s['Assistance and Care Allowance Share'] = 1/df_im_s['Assistance and Care Allowance Share']
     df_im_s['Poverty Share'] = 1/df_im_s['Poverty Share']
 
-    df_im_s.iloc[:, 2:-1] = df_im_s.iloc[:, 2:-1]/df_im_s.iloc[:, 2:-1].max()
-    df_im_s['Net Migrations per 1000 inhabitants'] = (df_im_s['Net Migrations per 1000 inhabitants'] - df_im_s['Net Migrations per 1000 inhabitants'].min())/(df_im_s['Net Migrations per 1000 inhabitants'].max() - df_im_s['Net Migrations per 1000 inhabitants'].min())
+    def sigmoid(z):
+        return 1/(1 + np.exp(-z))
+
+    for i in range(2,len(df_im_s.columns)):
+        df_im_s.iloc[:, i] = sigmoid((df_im_s.iloc[:, i] - df_im_s.iloc[:, i].mean())/df_im_s.iloc[:, i].std())
+
+    # df_im_s.iloc[:, 2:-1] = df_im_s.iloc[:, 2:-1]/df_im_s.iloc[:, 2:-1].max()
+    # df_im_s['Net Migrations per 1000 inhabitants'] = (df_im_s['Net Migrations per 1000 inhabitants'] - df_im_s['Net Migrations per 1000 inhabitants'].min())/(df_im_s['Net Migrations per 1000 inhabitants'].max() - df_im_s['Net Migrations per 1000 inhabitants'].min())
 
     gj = gpd.read_file('util/Opstina_l.geojson')
     df_im_c = df_im.copy()
@@ -677,62 +683,62 @@ with tab__4:
         with col12:
             st.markdown('Motorcycle Density')
         with col13:
-            st.markdown('Vehicles Density and Motorcycle Density lead to - **Vehicles**')
+            st.markdown('&emsp;Vehicles Density and Motorcycle Density lead to - **Vehicles**')
         with col14:
             st.markdown('Main Roads Accessibility')
         with col15:
             st.markdown('Local Roads Density')
         with col16:
-            st.markdown('Main Roads Accessibility and Local Roads Density lead to - **Roads**')
+            st.markdown('&emsp;Main Roads Accessibility and Local Roads Density lead to - **Roads**')
         with col17:
             st.markdown('Primary School Attendance')
         with col18:
             st.markdown('Secondary School Attendance')
         with col19:
-            st.markdown('Primary School Attendance and Secondary School Attendance lead to - **School**')
+            st.markdown('&emsp;Primary School Attendance and Secondary School Attendance lead to - **School**')
         with col110:
             st.markdown('Assistance and Care Allowance Share')
         with col111:
             st.markdown('Poverty Share')
         with col112:
-            st.markdown('Assistance and Care Allowance Share and Poverty Share lead to - **Social Factors**')
+            st.markdown('&emsp;Assistance and Care Allowance Share and Poverty Share lead to - **Social Factors**')
         with col113:
             st.markdown('Doctors Accessibility')
         with col114:
-            st.markdown('Social Factors and Doctors Accessibility lead to - **Health and Social Factors**')
+            st.markdown('&emsp;&emsp;Social Factors and Doctors Accessibility lead to - **Health and Social Factors**')
         with col115:
-            st.markdown('Schools and Health and Social Factors lead to - **Social Determinants**')
+            st.markdown('&emsp;&emsp;&emsp;Schools and Health and Social Factors lead to - **Social Determinants**')
 
         with col21:
-            annotated_text((pred['Vehicles Density'], '', pred['Vehicles Density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Vehicles Density'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Vehicles Density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col22:
-            annotated_text((pred['Motorcycle Density'], '', pred['Motorcycle Density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Motorcycle Density'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Motorcycle Density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col23:
-            annotated_text((pred['Vehicles'], '', pred['Vehicles'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Vehicles'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Vehicles'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col24:
-            annotated_text((pred['Main Roads Accessibility'], '', pred['Main Roads Accessibility'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
+            annotated_text((pred['Main Roads Accessibility'].map({'1': 'Good', '2': 'Medium', '3': 'Poor'})[0], '', pred['Main Roads Accessibility'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
         with col25:
-            annotated_text((pred['Local Roads Density'], '', pred['Local Roads Density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Local Roads Density'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Local Roads Density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col26:
-            annotated_text((pred['Roads'], '', pred['Roads'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Roads'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Roads'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col27:
-            annotated_text((pred['Primary School Attendance'], '', pred['Primary School Attendance'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Primary School Attendance'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Primary School Attendance'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col28:
-            annotated_text((pred['Secondary School Attendance'], '', pred['Secondary School Attendance'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Secondary School Attendance'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Secondary School Attendance'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col29:
-            annotated_text((pred['School'], '', pred['School'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['School'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['School'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col210:
-            annotated_text((pred['Assistance and Care Allowance Share'], '', pred['Assistance and Care Allowance Share'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
+            annotated_text((pred['Assistance and Care Allowance Share'].map({'1': 'Good', '2': 'Medium', '3': 'red'})[0], '', pred['Assistance and Care Allowance Share'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
         with col211:
-            annotated_text((pred['Poverty Share'], '', pred['Poverty Share'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
+            annotated_text((pred['Poverty Share'].map({'1': 'Good', '2': 'Medium', '3': 'Poor'})[0], '', pred['Poverty Share'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
         with col212:
-            annotated_text((pred['Social Factors'], '', pred['Social Factors'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Social Factors'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Social Factors'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col213:
-            annotated_text((pred['Doctors Accessibility'], '', pred['Doctors Accessibility'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Doctors Accessibility'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Doctors Accessibility'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col214:
-            annotated_text((pred['Health and Social Factors'], '', pred['Health and Social Factors'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Health and Social Factors'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Health and Social Factors'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col215:
-            annotated_text((pred['Social Determinants'], '', pred['Social Determinants'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Social Determinants'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Social Determinants'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
 
         st.markdown('**The predicted outcome is:**')
         prediction = dm.d.predict(df_mun).values[0].replace('1', 'Poor').replace('2', 'Medium').replace('3', 'Good')

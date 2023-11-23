@@ -43,33 +43,45 @@ LSGs = np.unique(df_im['Area Name'])
 selected_lsg = st.selectbox(label='Please select municipality', options=LSGs, index=79)
 df_mun = df_im.loc[(df_im['Area Name'] == selected_lsg) & (df_im['Time Period'] == 2021), :]
 df_mun_val = df_im_values.loc[(df_im_values['Area Name'] == selected_lsg) & (df_im_values['Time Period'] == 2021), :]
+df_im_values_selected = df_im_values.loc[df_im_values['Time Period'] == 2021, :]
 
 st.markdown('---')
 st.subheader('Visualization of the data')
 
 with st.expander('Visualization for comparison'):
-    st.subheader('Net Migrations Spyder Chart')
+    st.subheader('[Net Migrations Spyder Chart](Internal_Migrations_DEX_Model)')
     df_im_s = df_im_values.copy()
     df_im_s = df_im_s.loc[df_im_s['Time Period'] == 2021, :]
     
     df_im_s['Main Roads Accessibility'] = 1/df_im_s['Main Roads Accessibility']
     df_im_s['Assistance and Care Allowance Share'] = 1/df_im_s['Assistance and Care Allowance Share']
     df_im_s['Poverty Share'] = 1/df_im_s['Poverty Share']
-    df_im_s.iloc[:, 2:-1] = df_im_s.iloc[:, 2:-1]/df_im_s.iloc[:, 2:-1].max()
-    df_im_s['Net Migrations per 1000 inhabitants'] = (df_im_s['Net Migrations per 1000 inhabitants'] - df_im_s['Net Migrations per 1000 inhabitants'].min())/(df_im_s['Net Migrations per 1000 inhabitants'].max() - df_im_s['Net Migrations per 1000 inhabitants'].min())
+
+    def sigmoid(z):
+        return 1/(1 + np.exp(-z))
+
+    for i in range(2,len(df_im_s.columns)):
+        df_im_s.iloc[:, i] = sigmoid((df_im_s.iloc[:, i] - df_im_s.iloc[:, i].mean())/df_im_s.iloc[:, i].std())
+    # df_im_s.iloc[:, 2:-1] = df_im_s.iloc[:, 2:-1]/df_im_s.iloc[:, 2:-1].max()
+    # df_im_s['Net Migrations per 1000 inhabitants'] = (df_im_s['Net Migrations per 1000 inhabitants'] - df_im_s['Net Migrations per 1000 inhabitants'].min())/(df_im_s['Net Migrations per 1000 inhabitants'].max() - df_im_s['Net Migrations per 1000 inhabitants'].min())
 
     fig = go.Figure()
 
     df_im_s_y_lsg = df_im_s.loc[df_im_s['Area Name'] == selected_lsg, :].drop(['Time Period', 'Area Name'], axis=1)
+
+    st.markdown('The value of the Net Internal Migrations (per 1,000 inhabitants) is:')
+    color = 'red' if df_im_s_y_lsg['Net Migrations per 1000 inhabitants'].values[0] < -4 else ('lightgreen' if df_im_s_y_lsg['Net Migrations per 1000 inhabitants'].values[0] > 0 else 'gray')
+    annotated_text((f"{np.round(df_im_s_y_lsg['Net Migrations per 1000 inhabitants'].values[0], 3)}", '', color))
+
     fig.add_trace(go.Scatterpolar(
-        r=df_im_s_y_lsg.to_numpy()[0],
-        theta=df_im_s_y_lsg.columns.to_numpy(),
+        r=df_im_s_y_lsg.to_numpy()[0][:-1],
+        theta=df_im_s_y_lsg.columns.to_numpy()[:-1],
         fill='toself',
         name=selected_lsg
     ))
     st.plotly_chart(fig)
 
-    st.subheader('Gross Value Added per capita Spyder Chart')
+    st.subheader('[Gross Value Added per capita Spyder Chart](Gross_Value_Added_DEX_Model)')
 
     df_gva = pd.read_csv('data/gva.csv')
     df_gva_s = df_gva.copy()
@@ -79,22 +91,30 @@ with st.expander('Visualization for comparison'):
     df_gva_s['Unemployed rate'] = 1/df_gva_s['Unemployed rate']
     df_gva_s['Vehicles density'] = 1/df_gva_s['Vehicles density']
 
-    df_gva_s.iloc[:, 2:-1] = df_gva_s.iloc[:, 2:-1]/df_gva_s.iloc[:, 2:-1].max()
-    df_gva_s['GVA Per Capita Normalized'] = (df_gva_s['GVA Per Capita Normalized'] - df_gva_s['GVA Per Capita Normalized'].min())/(df_gva_s['GVA Per Capita Normalized'].max() - df_gva_s['GVA Per Capita Normalized'].min())
+    for i in range(2,len(df_gva_s.columns)):
+        df_gva_s.iloc[:, i] = sigmoid((df_gva_s.iloc[:, i] - df_gva_s.iloc[:, i].mean())/df_gva_s.iloc[:, i].std())
+
+    # df_gva_s.iloc[:, 2:-1] = df_gva_s.iloc[:, 2:-1]/df_gva_s.iloc[:, 2:-1].max()
+    # df_gva_s['GVA Per Capita Normalized'] = (df_gva_s['GVA Per Capita Normalized'] - df_gva_s['GVA Per Capita Normalized'].min())/(df_gva_s['GVA Per Capita Normalized'].max() - df_gva_s['GVA Per Capita Normalized'].min())
 
     fig = go.Figure()
 
     df_gva_s_y_lsg = df_gva_s.loc[df_gva_s['Area Name'] == selected_lsg, :].drop(['Time Period', 'Area Name'], axis=1)
+
+    st.markdown('The value of the Gross Value Added per capita (with values pooled year-wise) is:')
+    color = 'red' if df_gva_s_y_lsg['GVA Per Capita Normalized'].values[0] < -0.25 else ('lightgreen' if df_gva_s_y_lsg['GVA Per Capita Normalized'].values[0] > 0 else 'gray')
+    annotated_text((f"{np.round(df_gva_s_y_lsg['GVA Per Capita Normalized'].values[0], 3)}", '', color))
+
     fig.add_trace(go.Scatterpolar(
-        r=df_gva_s_y_lsg.to_numpy()[0],
-        theta=df_gva_s_y_lsg.columns.to_numpy(),
+        r=df_gva_s_y_lsg.to_numpy()[0][:-1],
+        theta=df_gva_s_y_lsg.columns.to_numpy()[:-1],
         fill='toself',
         name=selected_lsg
     ))
     st.plotly_chart(fig)
 
 st.markdown('---')
-st.subheader('Net Migration Prediction and Policy Potential')
+st.subheader('[Net Migration Prediction and Policy Potential](Internal_Migrations_DEX_Model)')
 
 with st.expander('Selected Municipality Attributes'):
     if df_mun.shape[0] == 0:
@@ -132,23 +152,23 @@ with st.expander('Selected Municipality Attributes'):
             st.markdown('Doctors Accessibility')
 
         with col21:
-            annotated_text((np.round(df_mun_val['Vehicles Density'], 3), '', pred['Vehicles Density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((np.round(df_mun_val['Vehicles Density'], 3), '', pred['Vehicles Density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]), (f"({np.round(df_im_values_selected['Vehicles Density'].mean(), 3)})", 'Serbia', ''))
         with col22:
-            annotated_text((np.round(df_mun_val['Motorcycle Density'], 3), '', pred['Motorcycle Density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((np.round(df_mun_val['Motorcycle Density'], 3), '', pred['Motorcycle Density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]), (f"({np.round(df_im_values_selected['Motorcycle Density'].mean(), 3)})", 'Serbia', ''))
         with col23:
-            annotated_text((np.round(df_mun_val['Main Roads Accessibility'], 3), '', pred['Main Roads Accessibility'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
+            annotated_text((np.round(df_mun_val['Main Roads Accessibility'], 3), '', pred['Main Roads Accessibility'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]), (f"({np.round(df_im_values_selected['Main Roads Accessibility'].mean(), 3)})", 'Serbia', ''))
         with col24:
-            annotated_text((np.round(df_mun_val['Local Roads Density'], 3), '', pred['Local Roads Density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((np.round(df_mun_val['Local Roads Density'], 3), '', pred['Local Roads Density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]), (f"({np.round(df_im_values_selected['Local Roads Density'].mean(), 3)})", 'Serbia', ''))
         with col25:
-            annotated_text((np.round(df_mun_val['Primary School Attendance'], 3), '', pred['Primary School Attendance'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((np.round(df_mun_val['Primary School Attendance'], 3), '', pred['Primary School Attendance'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]), (f"({np.round(df_im_values_selected['Primary School Attendance'].mean(), 3)})", 'Serbia', ''))
         with col26:
-            annotated_text((np.round(df_mun_val['Secondary School Attendance'], 3), '', pred['Secondary School Attendance'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((np.round(df_mun_val['Secondary School Attendance'], 3), '', pred['Secondary School Attendance'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]), (f"({np.round(df_im_values_selected['Secondary School Attendance'].mean(), 3)})", 'Serbia', ''))
         with col27:
-            annotated_text((np.round(df_mun_val['Assistance and Care Allowance Share'], 3), '', pred['Assistance and Care Allowance Share'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
+            annotated_text((np.round(df_mun_val['Assistance and Care Allowance Share'], 3), '', pred['Assistance and Care Allowance Share'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]), (f"({np.round(df_im_values_selected['Assistance and Care Allowance Share'].mean(), 3)})", 'Serbia', ''))
         with col28:
-            annotated_text((np.round(df_mun_val['Poverty Share'], 3), '', pred['Poverty Share'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
+            annotated_text((np.round(df_mun_val['Poverty Share'], 3), '', pred['Poverty Share'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]), (f"({np.round(df_im_values_selected['Poverty Share'].mean(), 3)})", 'Serbia', ''))
         with col29:
-            annotated_text((np.round(df_mun_val['Doctors Accessibility'], 3), '', pred['Doctors Accessibility'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((np.round(df_mun_val['Doctors Accessibility'], 3), '', pred['Doctors Accessibility'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]), (f"({np.round(df_im_values_selected['Doctors Accessibility'].mean(), 3)})", 'Serbia', ''))
 
 with st.expander('Predicted Outcome'):
     st.markdown('**The predicted outcome is:**')
@@ -908,9 +928,10 @@ df_gva = df_gva.replace({'nan': 'U'})
 
 df_mun = df_gva.loc[(df_gva['Area Name'] == selected_lsg) & (df_gva['Time Period'] == 2021), :]
 df_mun_values = df_gva_values.loc[(df_gva_values['Area Name'] == selected_lsg) & (df_gva_values['Time Period'] == 2021), :]
+df_gva_values_selected = df_gva_values.loc[df_gva_values['Time Period'] == 2021, :]
 
 st.markdown('---')
-st.subheader('Gross Value Added per capita Prediction and Policy Potential')
+st.subheader('[Gross Value Added per capita Prediction and Policy Potential](Gross_Value_Added_DEX_Model)')
 
 with st.expander('Selected Municipality Attributes'):
     if df_mun.shape[0] == 0:
@@ -954,27 +975,27 @@ with st.expander('Selected Municipality Attributes'):
             st.markdown('Transport and storage investments rate')
 
         with col21:
-            annotated_text((np.round(df_mun_values['Local roads density'], 3), '', pred['Local roads density'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
+            annotated_text((np.round(df_mun_values['Local roads density'], 3), '', pred['Local roads density'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]), (f"({np.round(df_gva_values_selected['Local roads density'].mean(), 3)})", 'Serbia', ''))
         with col22:
-            annotated_text((np.round(df_mun_values['Motorcycles density'], 3), '', pred['Motorcycles density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((np.round(df_mun_values['Motorcycles density'], 3), '', pred['Motorcycles density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]), (f"({np.round(df_gva_values_selected['Motorcycles density'].mean(), 3)})", 'Serbia', ''))
         with col23:
-            annotated_text((np.round(df_mun_values['Vehicles density'], 3), '', pred['Vehicles density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((np.round(df_mun_values['Vehicles density'], 3), '', pred['Vehicles density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]), (f"({np.round(df_gva_values_selected['Vehicles density'].mean(), 3)})", 'Serbia', ''))
         with col24:
-            annotated_text((np.round(df_mun_values['Main road accessibility'], 3), '', pred['Main road accessibility'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
+            annotated_text((np.round(df_mun_values['Main road accessibility'], 3), '', pred['Main road accessibility'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]), (f"({np.round(df_gva_values_selected['Main road accessibility'].mean(), 3)})", 'Serbia', ''))
         with col25:
-            annotated_text((np.round(df_mun_values['Tourists Arrivals'], 3), '', pred['Tourists Arrivals'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((np.round(df_mun_values['Tourists Arrivals'], 3), '', pred['Tourists Arrivals'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]), (f"({np.round(df_gva_values_selected['Tourists Arrivals'].mean(), 3)})", 'Serbia', ''))
         with col26:
-            annotated_text((np.round(df_mun_values['Preschool children enrollment rate'], 3), '', pred['Preschool children enrollment rate'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((np.round(df_mun_values['Preschool children enrollment rate'], 3), '', pred['Preschool children enrollment rate'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]), (f"({np.round(df_gva_values_selected['Preschool children enrollment rate'].mean(), 3)})", 'Serbia', ''))
         with col27:
-            annotated_text((np.round(df_mun_values['Doctors accessibility'], 3), '', pred['Doctors accessibility'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((np.round(df_mun_values['Doctors accessibility'], 3), '', pred['Doctors accessibility'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]), (f"({np.round(df_gva_values_selected['Doctors accessibility'].mean(), 3)})", 'Serbia', ''))
         with col28:
-            annotated_text((np.round(df_mun_values['Municipality employment rate'], 3), '', pred['Municipality employment rate'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((np.round(df_mun_values['Municipality employment rate'], 3), '', pred['Municipality employment rate'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]), (f"({np.round(df_gva_values_selected['Municipality employment rate'].mean(), 3)})", 'Serbia', ''))
         with col29:
-            annotated_text((np.round(df_mun_values['Unemployed rate'], 3), '', pred['Unemployed rate'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
+            annotated_text((np.round(df_mun_values['Unemployed rate'], 3), '', pred['Unemployed rate'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]), (f"({np.round(df_gva_values_selected['Unemployed rate'].mean(), 3)})", 'Serbia', ''))
         with col210:
-            annotated_text((np.round(df_mun_values['Active companies rate'], 3), '', pred['Active companies rate'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((np.round(df_mun_values['Active companies rate'], 3), '', pred['Active companies rate'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]), (f"({np.round(df_gva_values_selected['Active companies rate'].mean(), 3)})", 'Serbia', ''))
         with col211:
-            annotated_text((np.round(df_mun_values['Transport and storage investments rate'], 3), '', pred['Transport and storage investments rate'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((np.round(df_mun_values['Transport and storage investments rate'], 3), '', pred['Transport and storage investments rate'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]), (f"({np.round(df_gva_values_selected['Transport and storage investments rate'].mean(), 3)})", 'Serbia', ''))
 
 with st.expander('Predicted Outcome'):
     st.markdown('**The predicted outcome is:**')

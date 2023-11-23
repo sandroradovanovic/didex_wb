@@ -386,8 +386,14 @@ with tab__3:
     df_gva_s['Unemployed rate'] = 1/df_gva_s['Unemployed rate']
     df_gva_s['Vehicles density'] = 1/df_gva_s['Vehicles density']
 
-    df_gva_s.iloc[:, 2:-1] = df_gva_s.iloc[:, 2:-1]/df_gva_s.iloc[:, 2:-1].max()
-    df_gva_s['GVA Per Capita Normalized'] = (df_gva_s['GVA Per Capita Normalized'] - df_gva_s['GVA Per Capita Normalized'].min())/(df_gva_s['GVA Per Capita Normalized'].max() - df_gva_s['GVA Per Capita Normalized'].min())
+    def sigmoid(z):
+        return 1/(1 + np.exp(-z))
+    
+    for i in range(2,len(df_gva_s.columns)):
+        df_gva_s.iloc[:, i] = sigmoid((df_gva_s.iloc[:, i] - df_gva_s.iloc[:, i].mean())/df_gva_s.iloc[:, i].std())
+
+    # df_gva_s.iloc[:, 2:-1] = df_gva_s.iloc[:, 2:-1]/df_gva_s.iloc[:, 2:-1].max()
+    # df_gva_s['GVA Per Capita Normalized'] = (df_gva_s['GVA Per Capita Normalized'] - df_gva_s['GVA Per Capita Normalized'].min())/(df_gva_s['GVA Per Capita Normalized'].max() - df_gva_s['GVA Per Capita Normalized'].min())
 
     gj = gpd.read_file('util/Opstina_l.geojson')
     df_gva_c = df_gva.copy()
@@ -632,74 +638,74 @@ with tab__4:
         with col12:
             st.markdown('Motorcycles density')
         with col13:
-            st.markdown('Local roads density and Motorcycle Density lead to - **Local Traffic**')
+            st.markdown('&emsp;Local roads density and Motorcycle Density lead to - **Local Traffic**')
         with col14:
             st.markdown('Vehicles density')
         with col15:
             st.markdown('Main road accessibility')
         with col16:
-            st.markdown('Vehicles density and Main road accessibility lead to - **General Traffic**')
+            st.markdown('&emsp;Vehicles density and Main road accessibility lead to - **General Traffic**')
         with col17:
             st.markdown('Tourists Arrivals')
         with col18:
-            st.markdown('Tourists Arrivals and General Traffic lead to - **Tourism and Traffic**')
+            st.markdown('&emsp;&emsp;Tourists Arrivals and General Traffic lead to - **Tourism and Traffic**')
         with col19:
             st.markdown('Preschool children enrollment rate')
         with col110:
             st.markdown('Doctors accessibility')
         with col111:
-            st.markdown('Preschool children enrollment rate and Doctors accessibility lead to **Social Factors**')
+            st.markdown('&emsp;Preschool children enrollment rate and Doctors accessibility lead to **Social Factors**')
         with col112:
             st.markdown('Municipality employment rate')
         with col113:
             st.markdown('Unemployed rate')
         with col114:
-            st.markdown('Municipality employment rate and Unemployed rate lead to - **Employment State**')
+            st.markdown('&emsp;Municipality employment rate and Unemployed rate lead to - **Employment State**')
         with col115:
             st.markdown('Active companies rate')
         with col116:
-            st.markdown('Active companies rate and Employment State lead to - **Economy State**')
+            st.markdown('&emsp;&emsp;Active companies rate and Employment State lead to - **Economy State**')
         with col117:
             st.markdown('Transport and storage investments rate')
         with col118:
-            st.markdown('Economy State and Transport and storage investments rate lead to - **Economy and Investments**')
+            st.markdown('&emsp;&emsp;&emsp;Economy State and Transport and storage investments rate lead to - **Economy and Investments**')
 
         with col21:
-            annotated_text((pred['Local roads density'], '', pred['Local roads density'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
+            annotated_text((pred['Local roads density'].map({'1': 'Good', '2': 'Medium', '3': 'Poor'})[0], '', pred['Local roads density'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
         with col22:
-            annotated_text((pred['Motorcycles density'], '', pred['Motorcycles density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Motorcycles density'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Motorcycles density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col23:
-            annotated_text((pred['Local Traffic'], '', pred['Local Traffic'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Local Traffic'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Local Traffic'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col24:
-            annotated_text((pred['Vehicles density'], '', pred['Vehicles density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Vehicles density'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Vehicles density'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col25:
-            annotated_text((pred['Main road accessibility'], '', pred['Main road accessibility'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
+            annotated_text((pred['Main road accessibility'].map({'1': 'Good', '2': 'Medium', '3': 'Poor'})[0], '', pred['Main road accessibility'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
         with col26:
-            annotated_text((pred['General Traffic'], '', pred['General Traffic'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['General Traffic'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['General Traffic'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col27:
-            annotated_text((pred['Tourists Arrivals'], '', pred['Tourists Arrivals'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Tourists Arrivals'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Tourists Arrivals'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col28:
-            annotated_text((pred['Tourism and Traffic'], '', pred['Tourism and Traffic'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Tourism and Traffic'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Tourism and Traffic'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col29:
-            annotated_text((pred['Preschool children enrollment rate'], '', pred['Preschool children enrollment rate'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Preschool children enrollment rate'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Preschool children enrollment rate'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col210:
-            annotated_text((pred['Doctors accessibility'], '', pred['Doctors accessibility'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Doctors accessibility'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Doctors accessibility'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col211:
-            annotated_text((pred['Social Factors'], '', pred['Social Factors'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Social Factors'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Social Factors'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col212:
-            annotated_text((pred['Municipality employment rate'], '', pred['Municipality employment rate'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Municipality employment rate'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Municipality employment rate'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col213:
-            annotated_text((pred['Unemployed rate'], '', pred['Unemployed rate'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
+            annotated_text((pred['Unemployed rate'].map({'1': 'Good', '2': 'Medium', '3': 'Poor'})[0], '', pred['Unemployed rate'].map({'1': 'lightgreen', '2': 'gray', '3': 'red'})[0]))
         with col214:
-            annotated_text((pred['Employment State'], '', pred['Employment State'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Employment State'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Employment State'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col215:
-            annotated_text((pred['Active companies rate'], '', pred['Active companies rate'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Active companies rate'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Active companies rate'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col216:
-            annotated_text((pred['Economy State'], '', pred['Economy State'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Economy State'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Economy State'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col217:
-            annotated_text((pred['Transport and storage investments rate'], '', pred['Transport and storage investments rate'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Transport and storage investments rate'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Transport and storage investments rate'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
         with col218:
-            annotated_text((pred['Economy and Investments'], '', pred['Economy and Investments'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
+            annotated_text((pred['Economy and Investments'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'})[0], '', pred['Economy and Investments'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
 
         st.markdown('**The predicted outcome is:**')
         prediction = dm.d.predict(df_mun).values[0].replace('1', 'Poor').replace('2', 'Medium').replace('3', 'Good')
