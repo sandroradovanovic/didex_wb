@@ -12,8 +12,8 @@ st.markdown(
     - [PhD Sandro Radovanović](mailto:sandro.radovanovic@fon.bg.ac.rs), Assistant Professor, University of Belgrade
 
     The project supervisors were:
-    - [PhD Svetlana Vukanović](mailto:svukanovic@worldbank.org), World Bank Group
-    - [Igor Miščević](mailto:imiscevic@worldbank.org), World Bank Group
-    - [Lazar Šestović](mailto:lsestovic@worldbank.org), World Bank Group
+    - [PhD Svetlana Vukanović](mailto:svukanovic@worldbank.org), Senior Transport Specialist, World Bank Group
+    - [Igor Miščević](mailto:imiscevic@worldbank.org), Urban Development Expert, World Bank Group
+    - [Lazar Šestović](mailto:lsestovic@worldbank.org), Senior Country Economist, World Bank Group
     '''
 )

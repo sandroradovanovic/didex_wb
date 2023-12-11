@@ -21,17 +21,18 @@ tab__1, tab__2, tab__3, tab__4, tab__5 = st.tabs(["Internal Migrations DEX Model
 with tab__1:
     st.title('DEX Models for Net Internal Migration')
 
-    st.markdown(
-        '''
-        The final DIDEX extracted DEX model for internal migration management is shown below. **NOTE: This is our best effort having in mind the available data, constraints in data acquisition, the validity and accuracy of data, as well as the usability of the solution. The proposed model is intentially created to work with categories as this human decision makers are more prone to use qualitative values instead of exact numbers. Another note is that the accuracy of the predictive model is around 65% (using yearly based cross-validation) and this result is comparable to the results obtained using more complex machine learning models (that are not understandable to the human and that do not have an option to provide a list of possible policy interventions).**
-        
-        As one can see, **internal net migrations** are described using **Traffic** and **Social Determinants** factors. 
+    with st.expander('Introduction'):
+        st.markdown(
+            '''
+            The final DIDEX extracted DEX model for internal migration management is shown below. **NOTE: This is our best effort having in mind the available data, constraints in data acquisition, the validity and accuracy of data, as well as the usability of the solution. The proposed model is intentially created to work with categories as this human decision makers are more prone to use qualitative values instead of exact numbers. Another note is that the accuracy of the predictive model is around 65% (using yearly based cross-validation) and this result is comparable to the results obtained using more complex machine learning models (that are not understandable to the human and that do not have an option to provide a list of possible policy interventions).**
+            
+            As one can see, **internal net migrations** are described using **Traffic** and **Social Determinants** factors. 
 
-        Traffic conditions and transportation infrastructure play a pivotal role in internal migration predictions. Regions with well-developed and efficient transportation networks are more likely to attract people. Access to job opportunities, educational institutions, and healthcare facilities is often determined by traffic ease and connectivity. Regions with congested traffic, limited public transportation, or inadequate road networks may experience outward migration as people seek better access to essential services and improved quality of life elsewhere. 
+            Traffic conditions and transportation infrastructure play a pivotal role in internal migration predictions. Regions with well-developed and efficient transportation networks are more likely to attract people. Access to job opportunities, educational institutions, and healthcare facilities is often determined by traffic ease and connectivity. Regions with congested traffic, limited public transportation, or inadequate road networks may experience outward migration as people seek better access to essential services and improved quality of life elsewhere. 
 
-        Access to quality education is also a fundamental driver of internal migration. Families often relocate to areas with better school opportunities to provide their children with better educational opportunities. Regions with diverse and well-performing schools tend to attract migrants, leading to net inward migration. Conversely, areas with underfunded or struggling education may experience outward migration as people seek better services elsewhere. Social factors, such as **poverty share** and **assistance and care allowance share**, can also influence internal migration patterns. People often migrate to areas where they feel a sense of belonging and acceptance. Communities that have high poverty share and are in the need for care are often struggling and experiencing outward migrations. Additionally, factors like crime rates, social amenities, and recreational opportunities can impact migration decisions. Regions that provide a safe, vibrant, and fulfilling social environment are more likely to experience net inward migration.
-        '''
-    )
+            Access to quality education is also a fundamental driver of internal migration. Families often relocate to areas with better school opportunities to provide their children with better educational opportunities. Regions with diverse and well-performing schools tend to attract migrants, leading to net inward migration. Conversely, areas with underfunded or struggling education may experience outward migration as people seek better services elsewhere. Social factors, such as **poverty share** and **assistance and care allowance share**, can also influence internal migration patterns. People often migrate to areas where they feel a sense of belonging and acceptance. Communities that have high poverty share and are in the need for care are often struggling and experiencing outward migrations. Additionally, factors like crime rates, social amenities, and recreational opportunities can impact migration decisions. Regions that provide a safe, vibrant, and fulfilling social environment are more likely to experience net inward migration.
+            '''
+        )
 
     st.markdown('---')
     st.subheader('Attribute Description')
@@ -305,13 +306,14 @@ with tab__1:
 with tab__2:
     st.title('Net Internal Migration Data Exploration')
 
-    st.markdown(
-        '''
-        This page aims to inspect the data for the Net Internal Migrations.
+    with st.expander('Information'):
+        st.markdown(
+            '''
+            This page aims to inspect the data for the Net Internal Migrations.
 
-        Below you can find multi-select area where you can select up to ten municipalities and up to ten years. Selection of municipalities and time periods impact the table below. Values in the table are denoted with red or green background depending on whether that particular value is in the category *Poor* (red color) or *Good* (green color). 
-        '''
-    )
+            Below you can find multi-select area where you can select up to ten municipalities and up to ten years. Selection of municipalities and time periods impact the table below. Values in the table are denoted with red or green background depending on whether that particular value is in the category *Poor* (red color) or *Good* (green color). 
+            '''
+        )
 
     df_im = pd.read_csv('data/im.csv')
     LSGs = np.unique(df_im['Area Name'])
@@ -430,13 +432,14 @@ with tab__2:
 with tab__3:
     st.title('Net Internal Migration Data Visualization')
 
-    st.markdown(
-        '''
-        This page aims to inspect the data for the Net Internal Migrations.
+    with st.expander('Information'):
+        st.markdown(
+            '''
+            This page aims to inspect the data for the Net Internal Migrations.
 
-        Below you can find multi-select area where you can select up to ten municipalities. In addition, please select the attribute you would like to investigate.
-        '''
-    )
+            Below you can find multi-select area where you can select up to ten municipalities. In addition, please select the attribute you would like to investigate.
+            '''
+        )
 
     df_im = pd.read_csv('data/im.csv')
     df_im_s = df_im.copy()
@@ -467,9 +470,10 @@ with tab__3:
 
     st.subheader('Comparison for a selected year')
 
-    st.markdown('The first chart for comparison is a radar chart where one can observe how selected municipalities compare between each other. By default, radar chart will not show up due to having too many municipalities.')
-    st.markdown('NOTE: To make values comparable on the radar chart, we scaled values so that the highest value is one for each year. In addition, we inverted the values where the lower value is better, thus, 1 is always the best value and 0 is always the worst.')
-    st.markdown('Regarding the *Net Migrations per 1000 inhabitants* values are scaled with max-min normalization technique, which means that zero is the worst value and one is the best value.')
+    with st.expander('Description'):
+        st.markdown('The first chart for comparison is a radar chart where one can observe how selected municipalities compare between each other. By default, radar chart will not show up due to having too many municipalities.')
+        st.markdown('NOTE: To make values comparable on the radar chart, we scaled values so that the highest value is one for each year. In addition, we inverted the values where the lower value is better, thus, 1 is always the best value and 0 is always the worst.')
+        st.markdown('Regarding the *Net Migrations per 1000 inhabitants* values are scaled with max-min normalization technique, which means that zero is the worst value and one is the best value.')
 
     selected_year = st.selectbox(label='Please select the year of observation', options=years, index=9)
 

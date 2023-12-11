@@ -31,13 +31,14 @@ years = np.unique(df['Time Period'])
 selected_lsgs = st.multiselect('Please select municipalities for which you would want to observe the data:', LSGs, max_selections=10)
 selected_year = st.selectbox('Please select year for which you would want to observe the data:', years, index=10)
 
-st.markdown(
-    '''
-    Due to restrictions on the availability of data and the locations of the resources we utilized special *interaction-based accessibility measures*. More specifically, **accessibility to a resource from one municipality is equal to availability to reach the desired resource within a predefined time-frame (of 0, 15, 30, 45, and 60 minutes). However, population size within the specified time-frame is also taken into account as a discount factor. In other words, total amount of resources are divided by population size leading to a measurment unit of resource per capita**. To calculate the distance between two municipalities we used Google Maps Directions API and calculated the distance between the centers of the two municipalities using the car. The center of the municipality is, according to Google Maps, a place where the main building of the municipality is located. This might not be the center of the municipality (the middle location of the municipality), nor the place where most people in the municipality live. The positive sides of the Google Maps Direction API are that the exact roads were used, with information about the speed limits and traffic state (at noon). Consequently, as a result, we obtained information about the distance in meters between the two municipalities, as well as the time needed to get from one municipality to another.
+with st.expander('Explanation'):
+    st.markdown(
+        '''
+        Due to restrictions on the availability of data and the locations of the resources we utilized special *interaction-based accessibility measures*. More specifically, **accessibility to a resource from one municipality is equal to availability to reach the desired resource within a predefined time-frame (of 0, 15, 30, 45, and 60 minutes). However, population size within the specified time-frame is also taken into account as a discount factor. In other words, total amount of resources are divided by population size leading to a measurment unit of resource per capita**. To calculate the distance between two municipalities we used Google Maps Directions API and calculated the distance between the centers of the two municipalities using the car. The center of the municipality is, according to Google Maps, a place where the main building of the municipality is located. This might not be the center of the municipality (the middle location of the municipality), nor the place where most people in the municipality live. The positive sides of the Google Maps Direction API are that the exact roads were used, with information about the speed limits and traffic state (at noon). Consequently, as a result, we obtained information about the distance in meters between the two municipalities, as well as the time needed to get from one municipality to another.
 
-    Every attribute in the accessibility format is calculated *per 1,000 inhabitants* except for the *Life expectancy at birth*, *Average annual net salaries and wages*, and *Total Business Incomes* which present the value *per capita*. 
-    '''
-)
+        Every attribute in the accessibility format is calculated *per 1,000 inhabitants* except for the *Life expectancy at birth*, *Average annual net salaries and wages*, and *Total Business Incomes* which present the value *per capita*. 
+        '''
+    )
 
 atts = df.columns[~df.columns.str.startswith('access_')].drop(['Time Period', 'Area Name', 'Population size - Total', 'GVA Current prices'])
 
@@ -75,6 +76,7 @@ if (selected_attribute != []) & (selected_time != []) & (selected_lsgs != []):
 
         st.subheader('Spyder Chart for the selected attributes')
         st.markdown('Values in the Spyder Chart are normalized such that the highest value for the selected year in the entire Servia is equal to one, while the lowest value is equal to zero. In addition, the average value for Serbia is 0.5.')
+        
         fig = go.Figure()
 
         for lsg in selected_lsgs:

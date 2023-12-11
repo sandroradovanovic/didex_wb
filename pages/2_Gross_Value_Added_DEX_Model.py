@@ -21,15 +21,16 @@ tab__1, tab__2, tab__3, tab__4, tab__5 = st.tabs(["Gross Value Added DEX Model",
 with tab__1:
     st.title('DEX Models for (Pooled) GVA Per Capita')
 
-    st.markdown(
-        '''
-        The final DIDEX extracted DEX model for the (Pooled) GVA Per Capita is shown below. **NOTE: This is our best effort having in mind the available data, constraints in data acquisition, the validity and accuracy of data, as well as the usability of the solution. The proposed model is intentially created to work with categories as this human decision makers are more prone to use qualitative values instead of exact numbers. Another note is that the accuracy of the predictive model is around 70% (using yearly based cross-validation) and this result is comparable to the results obtained using more complex machine learning models (that are not understandable to the human and that do not have an option to provide a list of possible policy interventions).**
-        
-        Gross-value-added per capita prediction has a confounding effect as the economy improves over time. Consequently, the best-performing municipalities in 2010 had similar economic activity as the worst-performing municipalities in 2021. Although expected, one can argue about whether these numbers are comparable. In other words, using these values to explain or predict the gross value added would lead to inaccuracies in interpretation and consequently policymaking. To make each year comparable (in other words, to eliminate the effect of time), we performed year-wise pooled Z transformation. This means gross value added per capita has an average value equal to zero and a standard deviation equal to one for every year. Thus, municipalities that are consistently below average would have negative values, and vice-versa municipalities that are consistently above average would have positive values.
+    with st.expander('Introduction'):
+        st.markdown(
+            '''
+            The final DIDEX extracted DEX model for the (Pooled) GVA Per Capita is shown below. **NOTE: This is our best effort having in mind the available data, constraints in data acquisition, the validity and accuracy of data, as well as the usability of the solution. The proposed model is intentially created to work with categories as this human decision makers are more prone to use qualitative values instead of exact numbers. Another note is that the accuracy of the predictive model is around 70% (using yearly based cross-validation) and this result is comparable to the results obtained using more complex machine learning models (that are not understandable to the human and that do not have an option to provide a list of possible policy interventions).**
+            
+            Gross-value-added per capita prediction has a confounding effect as the economy improves over time. Consequently, the best-performing municipalities in 2010 had similar economic activity as the worst-performing municipalities in 2021. Although expected, one can argue about whether these numbers are comparable. In other words, using these values to explain or predict the gross value added would lead to inaccuracies in interpretation and consequently policymaking. To make each year comparable (in other words, to eliminate the effect of time), we performed year-wise pooled Z transformation. This means gross value added per capita has an average value equal to zero and a standard deviation equal to one for every year. Thus, municipalities that are consistently below average would have negative values, and vice-versa municipalities that are consistently above average would have positive values.
 
-        The obtained DEX model can be divided into three categories. Namely, *Tourism and Traffic*, *Social Factors*, and *Economy and Investments*. This depicts the multifaceted nature of the gross value added prediction. While logically the state of economy in LSG and investments in transportation have a high influence on the outcome, accessibility to resources identified by *Tourism and Traffic* factor, as well as *Social Factors* influence the outcome as well.  
-        '''
-    )
+            The obtained DEX model can be divided into three categories. Namely, *Tourism and Traffic*, *Social Factors*, and *Economy and Investments*. This depicts the multifaceted nature of the gross value added prediction. While logically the state of economy in LSG and investments in transportation have a high influence on the outcome, accessibility to resources identified by *Tourism and Traffic* factor, as well as *Social Factors* influence the outcome as well.  
+            '''
+        )
 
     st.markdown('---')
     st.subheader('Attribute Description')
@@ -226,13 +227,14 @@ with tab__1:
 with tab__2:
     st.title('Gross Value Added per capita Data Exploration')
 
-    st.markdown(
-        '''
-        This page aims to inspect the data for the Gross Value Added per capita.
+    with st.expander('Information'):
+        st.markdown(
+            '''
+            This page aims to inspect the data for the Gross Value Added per capita.
 
-        Below you can find multi-select area where you can select up to ten municipalities and up to ten years. Selection of municipalities and time periods impact the table below. Values in the table are denoted with red or green background depending on whether that particular value is in the category *Poor* (red color) or *Good* (green color). 
-        '''
-    )
+            Below you can find multi-select area where you can select up to ten municipalities and up to ten years. Selection of municipalities and time periods impact the table below. Values in the table are denoted with red or green background depending on whether that particular value is in the category *Poor* (red color) or *Good* (green color). 
+            '''
+        )
 
     df_gva = pd.read_csv('data/gva.csv')
     df_gva = df_gva.loc[df_gva['GVA Per Capita Normalized'].notna(), :] # Some LSGs do not hva GVA, thus they are omitted from the analysis
@@ -371,13 +373,14 @@ with tab__2:
 with tab__3:
     st.title('Gross Value Added per capita Data Visualization')
 
-    st.markdown(
-        '''
-        This page aims to inspect the data for the Gross Value Added per capita.
+    with st.expander('Information'):
+        st.markdown(
+            '''
+            This page aims to inspect the data for the Gross Value Added per capita.
 
-        Below you can find multi-select area where you can select up to ten municipalities. In addition, please select the attribute you would like to investigate.
-        '''
-    )
+            Below you can find multi-select area where you can select up to ten municipalities. In addition, please select the attribute you would like to investigate.
+            '''
+        )   
 
     df_gva = pd.read_csv('data/gva.csv')
     df_gva_s = df_gva.copy()
@@ -409,9 +412,10 @@ with tab__3:
 
     st.subheader('Comparison for a selected year')
 
-    st.markdown('The first chart for comparison is a radar chart where one can observe how selected municipalities compare between each other. By default, radar chart will not show up due to having too many municipalities.')
-    st.markdown('NOTE: To make values comparable on the radar chart, we scaled values so that the highest value is one for each year. In addition, we inverted the values where the lower value is better, thus, 1 is always the best value and 0 is always the worst.')
-    st.markdown('Regarding the *GVA Per Capita Normalized* values are scaled with max-min normalization technique, which means that zero is the worst value and one is the best value.')
+    with st.expander('Description'):
+        st.markdown('The first chart for comparison is a radar chart where one can observe how selected municipalities compare between each other. By default, radar chart will not show up due to having too many municipalities.')
+        st.markdown('NOTE: To make values comparable on the radar chart, we scaled values so that the highest value is one for each year. In addition, we inverted the values where the lower value is better, thus, 1 is always the best value and 0 is always the worst.')
+        st.markdown('Regarding the *GVA Per Capita Normalized* values are scaled with max-min normalization technique, which means that zero is the worst value and one is the best value.')
 
     selected_year = st.selectbox(label='Please select the year of observation', options=years, index=9)
 

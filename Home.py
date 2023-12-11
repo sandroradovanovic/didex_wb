@@ -16,10 +16,11 @@ st.title('DEX Models for Internal Migration and Gross Value Added per capita Exp
 
 st.image('img/world-bank-logo.png', width=300)
 
-st.markdown("This web app acts as a service to policy- and decision-makers in the local self-governing units or Ministry of Public Administration and Local Self-Government to inspect effects of decisions and/or policies on **net internal migrations** and **gross value added per capita (constant prices)**.")
-st.markdown('---')
-st.markdown("**NOTE: This is our best effort having in mind the available data, constraints in data acquisition, the validity and accuracy of data, as well as the usability of the solution. The proposed model is intentially created to work with categories as this human decision makers are more prone to use qualitative values instead of exact numbers. Another note is that the accuracy of the predictive model is around 65% and 70% for net internal migrations and gross value added per capita respectively (using yearly based cross-validation) and these results are comparable to the results obtained using more complex machine learning models (that are not understandable to the human and that do not have an option to provide a list of possible policy interventions) using the same or more comprehensive set of attributes and using the same validation.**")
-st.markdown('---')
+with st.expander('Introductory information'):
+    st.markdown("This web app acts as a service to policy- and decision-makers in the local self-governing units or Ministry of Public Administration and Local Self-Government to inspect effects of decisions and/or policies on **net internal migrations** and **gross value added per capita (constant prices)**.")
+    st.markdown('---')
+    st.markdown("**NOTE: This is our best effort having in mind the available data, constraints in data acquisition, the validity and accuracy of data, as well as the usability of the solution. The proposed model is intentially created to work with categories as this human decision makers are more prone to use qualitative values instead of exact numbers. Another note is that the accuracy of the predictive model is around 65% and 70% for net internal migrations and gross value added per capita respectively (using yearly based cross-validation) and these results are comparable to the results obtained using more complex machine learning models (that are not understandable to the human and that do not have an option to provide a list of possible policy interventions) using the same or more comprehensive set of attributes and using the same validation.**")
+    st.markdown('---')
 
 st.markdown('For a short demonstration of the proposed models, please select a municipality and predicted results for net migrations and gross value added will be shown below. We will take the data for 2021 from the Open Data portal of Statistical Office of the Republic of Serbia.')
 st.markdown('You can test the proposed tool by clicking the approapriate menu item at the sidebar (either *Internal Migrations DEX Model* or *Gross Value Added DEX Model*)')
@@ -65,7 +66,7 @@ with st.expander('Visualization for comparison'):
     # df_im_s.iloc[:, 2:-1] = df_im_s.iloc[:, 2:-1]/df_im_s.iloc[:, 2:-1].max()
     # df_im_s['Net Migrations per 1000 inhabitants'] = (df_im_s['Net Migrations per 1000 inhabitants'] - df_im_s['Net Migrations per 1000 inhabitants'].min())/(df_im_s['Net Migrations per 1000 inhabitants'].max() - df_im_s['Net Migrations per 1000 inhabitants'].min())
 
-    fig = go.Figure()
+    fig1 = go.Figure()
 
     df_im_s_y_lsg = df_im_s.loc[df_im_s['Area Name'] == selected_lsg, :].drop(['Time Period', 'Area Name'], axis=1)
 
@@ -73,13 +74,13 @@ with st.expander('Visualization for comparison'):
     color = 'red' if df_im_s_y_lsg['Net Migrations per 1000 inhabitants'].values[0] < -4 else ('lightgreen' if df_im_s_y_lsg['Net Migrations per 1000 inhabitants'].values[0] > 0 else 'gray')
     annotated_text((f"{np.round(df_im_s_y_lsg['Net Migrations per 1000 inhabitants'].values[0], 3)}", '', color))
 
-    fig.add_trace(go.Scatterpolar(
+    fig1.add_trace(go.Scatterpolar(
         r=df_im_s_y_lsg.to_numpy()[0][:-1],
         theta=df_im_s_y_lsg.columns.to_numpy()[:-1],
         fill='toself',
         name=selected_lsg
     ))
-    st.plotly_chart(fig)
+    st.plotly_chart(fig1)
 
     st.subheader('[Gross Value Added per capita Spyder Chart](Gross_Value_Added_DEX_Model)')
 
@@ -97,7 +98,7 @@ with st.expander('Visualization for comparison'):
     # df_gva_s.iloc[:, 2:-1] = df_gva_s.iloc[:, 2:-1]/df_gva_s.iloc[:, 2:-1].max()
     # df_gva_s['GVA Per Capita Normalized'] = (df_gva_s['GVA Per Capita Normalized'] - df_gva_s['GVA Per Capita Normalized'].min())/(df_gva_s['GVA Per Capita Normalized'].max() - df_gva_s['GVA Per Capita Normalized'].min())
 
-    fig = go.Figure()
+    fig2 = go.Figure()
 
     df_gva_s_y_lsg = df_gva_s.loc[df_gva_s['Area Name'] == selected_lsg, :].drop(['Time Period', 'Area Name'], axis=1)
 
@@ -105,13 +106,13 @@ with st.expander('Visualization for comparison'):
     color = 'red' if df_gva_s_y_lsg['GVA Per Capita Normalized'].values[0] < -0.25 else ('lightgreen' if df_gva_s_y_lsg['GVA Per Capita Normalized'].values[0] > 0 else 'gray')
     annotated_text((f"{np.round(df_gva_s_y_lsg['GVA Per Capita Normalized'].values[0], 3)}", '', color))
 
-    fig.add_trace(go.Scatterpolar(
+    fig2.add_trace(go.Scatterpolar(
         r=df_gva_s_y_lsg.to_numpy()[0][:-1],
         theta=df_gva_s_y_lsg.columns.to_numpy()[:-1],
         fill='toself',
         name=selected_lsg
     ))
-    st.plotly_chart(fig)
+    st.plotly_chart(fig2)
 
 st.markdown('---')
 st.subheader('[Net Migration Prediction and Policy Potential](Internal_Migrations_DEX_Model)')
