@@ -50,7 +50,7 @@ st.markdown('---')
 st.subheader('Visualization of the data')
 
 with st.expander('Visualization for comparison'):
-    st.subheader('[Net Migrations Spyder Chart](Internal_Migrations_DEX_Model)')
+    st.subheader('[Net Migrations Visualization](Internal_Migrations_DEX_Model)')
     df_im_s = df_im_values.copy()
     df_im_s = df_im_s.loc[df_im_s['Time Period'] == 2021, :]
     
@@ -75,6 +75,13 @@ with st.expander('Visualization for comparison'):
     annotated_text((f"{np.round(df_im_s_y_lsg['Net Migrations per 1000 inhabitants'].values[0], 3)}", '', color))
 
     fig1.add_trace(go.Scatterpolar(
+        r=np.repeat(0.5, len(df_im_s_y_lsg.columns) - 1),
+        theta=df_im_s_y_lsg.columns.to_numpy()[:-1],
+        fill='toself',
+        name='Serbia - Average'
+    ))
+
+    fig1.add_trace(go.Scatterpolar(
         r=df_im_s_y_lsg.to_numpy()[0][:-1],
         theta=df_im_s_y_lsg.columns.to_numpy()[:-1],
         fill='toself',
@@ -82,7 +89,7 @@ with st.expander('Visualization for comparison'):
     ))
     st.plotly_chart(fig1)
 
-    st.subheader('[Gross Value Added per capita Spyder Chart](Gross_Value_Added_DEX_Model)')
+    st.subheader('[Gross Value Added per capita Visualization](Gross_Value_Added_DEX_Model)')
 
     df_gva = pd.read_csv('data/gva.csv')
     df_gva_s = df_gva.copy()
@@ -106,6 +113,12 @@ with st.expander('Visualization for comparison'):
     color = 'red' if df_gva_s_y_lsg['GVA Per Capita Normalized'].values[0] < -0.25 else ('lightgreen' if df_gva_s_y_lsg['GVA Per Capita Normalized'].values[0] > 0 else 'gray')
     annotated_text((f"{np.round(df_gva_s_y_lsg['GVA Per Capita Normalized'].values[0], 3)}", '', color))
 
+    fig2.add_trace(go.Scatterpolar(
+        r=np.repeat(0.5, len(df_gva_s_y_lsg.columns) - 1),
+        theta=df_gva_s_y_lsg.columns.to_numpy()[:-1],
+        fill='toself',
+        name='Serbia - Average'
+    ))
     fig2.add_trace(go.Scatterpolar(
         r=df_gva_s_y_lsg.to_numpy()[0][:-1],
         theta=df_gva_s_y_lsg.columns.to_numpy()[:-1],

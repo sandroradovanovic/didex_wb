@@ -47,7 +47,7 @@ selected_time = st.selectbox('Please select the time distance for the :', [15, 3
 
 if (selected_attribute != []) & (selected_time != []) & (selected_lsgs != []):
     st.subheader('Data Table')
-    st.markdown('Before the Spyder chart where one can compare values of multiple LSGs, we present a data table with the original value, normalized value (per 1,000 inhabitants or per capita) that represents accessibility within the LSG and normalized value (per 1,000 inhabitants or per capita) that represents accessibility to a resource within the selected time-frame.')
+    st.markdown('Before the chart where one can compare values of multiple LSGs, we present a data table with the original value, normalized value (per 1,000 inhabitants or per capita) that represents accessibility within the LSG and normalized value (per 1,000 inhabitants or per capita) that represents accessibility to a resource within the selected time-frame.')
 
     gj = gpd.read_file('util/Opstina_l.geojson')
 
@@ -74,8 +74,8 @@ if (selected_attribute != []) & (selected_time != []) & (selected_lsgs != []):
         df_s_a = df_s_a.loc[df_s_a['Time Period'] == selected_year, :]
 
 
-        st.subheader('Spyder Chart for the selected attributes')
-        st.markdown('Values in the Spyder Chart are normalized such that the highest value for the selected year in the entire Servia is equal to one, while the lowest value is equal to zero. In addition, the average value for Serbia is 0.5.')
+        st.subheader('Visualization for the selected attributes')
+        st.markdown('Values in the Visualization are normalized such that the highest value for the selected year in the entire Serbia is equal to one, while the lowest value is equal to zero. In addition, the average value for Serbia is 0.5.')
         
         fig = go.Figure()
 

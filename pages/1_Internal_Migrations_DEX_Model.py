@@ -488,6 +488,13 @@ with tab__3:
 
         fig = go.Figure()
 
+        fig.add_trace(go.Scatterpolar(
+                r=np.repeat(0.5, len(df_im_s_y.drop(['Time Period', 'Area Name'], axis=1).columns)),
+                theta=df_im_s_y.drop(['Time Period', 'Area Name'], axis=1).columns.to_numpy(),
+                fill='toself',
+                name='Serbia - Average'
+        ))
+
         for lsg in selected_lsgs:
             df_im_s_y_lsg = df_im_s_y.loc[df_im_s_y['Area Name'] == lsg, :].drop(['Time Period', 'Area Name'], axis=1)
             fig.add_trace(go.Scatterpolar(
@@ -495,7 +502,7 @@ with tab__3:
                 theta=df_im_s_y_lsg.columns.to_numpy(),
                 fill='toself',
                 name=lsg
-        ))
+            ))
         st.plotly_chart(fig)
     else:
         st.markdown('Please select municipality/municipalities to plot radar chart')
