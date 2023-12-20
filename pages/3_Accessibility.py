@@ -57,7 +57,8 @@ if (selected_attribute != []) & (selected_time != []) & (selected_lsgs != []):
         df_s = df.copy()
         df_s = df_s.loc[:, ['Area Name', 'Time Period', *selected_attribute, *[f'access_0_' + x for x in selected_attribute], *[f'access_{selected_time}_' + x for x in selected_attribute]]]
         df_s_tab = df_s.loc[df_s['Area Name'].isin(selected_lsgs), :]
-        st.table(df_s_tab.head(10))
+        with st.expander('Data Table'):
+            st.table(df_s_tab)
 
         df_s = df_s.loc[:, ['Area Name', 'Time Period', *[f'access_{selected_time}_' + x for x in selected_attribute]]]
         
