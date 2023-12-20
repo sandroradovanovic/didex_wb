@@ -137,7 +137,10 @@ if (selected_attribute != []) & (selected_time != []) & (selected_lsgs != []):
                 for o in df_time.index[rad_mun].to_list():
                     opstine.append(o)
             opstine = list(set(opstine))
-            df_s_s = df_s.loc[df_s['Area Name'].isin(opstine), :]
+            # df_s_s = df_s.loc[df_s['Area Name'].isin(opstine), :]
+
+            df_s_s = df_s.copy()
+            df_s_s[f'access_{selected_time}_{att}'] = df_s_s.apply(lambda x: x[f'access_{selected_time}_{att}'] if x['Area Name'] in opstine else (vals[1] + vals[0])/2, axis=1)
             
             df_s_s['Area Name'] = df_s_s['Area Name'].str.upper().str.replace(' ', '')
 
