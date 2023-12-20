@@ -77,17 +77,47 @@ if (selected_attribute != []) & (selected_time != []) & (selected_lsgs != []):
         st.subheader('Visualization for the selected attributes')
         st.markdown('Values in the Visualization are normalized such that the highest value for the selected year in the entire Serbia is equal to one, while the lowest value is equal to zero. In addition, the average value for Serbia is 0.5.')
         
-        fig = go.Figure()
+        if len(selected_attribute) > 2:
+            fig = go.Figure()
 
-        for lsg in selected_lsgs:
-            df_s_y = df_s_a.loc[df_s['Area Name'] == lsg, :].drop(['Time Period', 'Area Name'], axis=1)
             fig.add_trace(go.Scatterpolar(
-                r=df_s_y.to_numpy()[0],
-                theta=df_s_y.columns.to_numpy(),
+                r=np.repeat(0.5, len(df_s.drop(['Time Period', 'Area Name'], axis=1).columns)),
+                theta=df_s.drop(['Time Period', 'Area Name'], axis=1).columns.to_numpy(),
                 fill='toself',
-                name=lsg
-        ))
-        st.plotly_chart(fig)
+                name='Serbia - Average'
+            ))
+
+            for lsg in selected_lsgs:
+                df_s_y = df_s_a.loc[df_s['Area Name'] == lsg, :].drop(['Time Period', 'Area Name'], axis=1)
+                fig.add_trace(go.Scatterpolar(
+                    r=df_s_y.to_numpy()[0],
+                    theta=df_s_y.columns.to_numpy(),
+                    fill='toself',
+                    name=lsg
+            ))
+            st.plotly_chart(fig)
+        elif len(selected_attribute) == 1:
+            fig = px.bar(df_s_a, x = "Area Name", y = df_s_a.iloc[:, -1], title = f"Bar Chart of {selected_attribute[0]}")
+
+            fig.update_traces(text = np.round(df_s_a.iloc[:, -1], 4), textposition='outside')
+            fig.add_hline(y=0.5, line_dash="dash")
+            fig.update_layout(
+                xaxis_title="LSG",
+                yaxis_title=f"Accessibility to {selected_attribute[0]} within {selected_time} minutes",
+            )
+
+            st.plotly_chart(fig)
+        else:
+            fig = px.scatter(df_s_a, x=df_s_a.iloc[:, -1], y=df_s_a.iloc[:, -2], title="Scatter plot for the selected attributes", color="Area Name")
+            fig.add_hline(y=0.5, line_dash="dash")
+            fig.add_vline(x=0.5, line_dash="dash")
+
+            fig.update_layout(
+                xaxis_title=f"Accessibility to {selected_attribute[0]} within {selected_time} minutes",
+                yaxis_title=f"Accessibility to {selected_attribute[1]} within {selected_time} minutes",
+            )
+
+            st.plotly_chart(fig)
 
         st.subheader('Map Visualization')
         st.markdown('Finally, we present the data on the map.')
