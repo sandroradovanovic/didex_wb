@@ -114,8 +114,8 @@ if (selected_attribute != []) & (selected_time != []) & (selected_lsgs != []):
             fig.add_vline(x=0.5, line_dash="dash")
 
             fig.update_layout(
-                xaxis_title=f"Accessibility to {selected_attribute[0]} within {selected_time} minutes",
-                yaxis_title=f"Accessibility to {selected_attribute[1]} within {selected_time} minutes",
+                xaxis_title=f"Accessibility to {selected_attribute[1]} within {selected_time} minutes",
+                yaxis_title=f"Accessibility to {selected_attribute[0]} within {selected_time} minutes",
             )
 
             st.plotly_chart(fig)
