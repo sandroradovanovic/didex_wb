@@ -929,11 +929,9 @@ with st.expander('Details'):
     st.markdown("This part of the page discuss the potential possibility of interventions on Gross Value Added per capita. We show potential interventions by changing the values of input attributes for one degree in improvement and one degree in deterioration. If a single intervention improves or deteriorates the outcome it will be presented in an appropriate color - red for the low Gross Value added per capita (-0.25 or lower), gray for negative (between -0.25 and 0), and green (greater than 0).")
 
     ### Tourists Arrivals
-    st.markdown('#### Tourists Arrivals')
     to_write = True
     if (df_mun['Tourists Arrivals'].values[0] == dm_gva.d._levels[0][1][len(dm_gva.d._levels[0][1]) - 1]):
         to_write = False
-        st.markdown('The **increase** in *Tourists Arrivals* will not influence the outcome.')
 
         df_mun_v = df_mun.copy()
         down_v = dm_gva.d._levels[0][1].index(df_mun['Tourists Arrivals'].values[0]) - 1
@@ -947,12 +945,9 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('A **decrease** in *Tourists Arrivals* to a value between 978.0 and 7629.333 **does not change** the outcome.')
     
     if df_mun['Tourists Arrivals'].values[0] == dm_gva.d._levels[0][1][0]:
         to_write = False
-        st.markdown('The **decrease** in *Tourists Arrivals* will not influence the outcome.')
 
         df_mun_v = df_mun.copy()
         up_v = dm_gva.d._levels[0][1].index(df_mun['Tourists Arrivals'].values[0]) + 1
@@ -966,8 +961,7 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('An **increase** in *Tourists Arrivals* to a value between 978.0 and 7629.333 **does not change** the outcome.')
+
     if to_write:
         df_mun_v = df_mun.copy()
         up_v = dm_gva.d._levels[0][1].index(df_mun['Tourists Arrivals'].values[0]) + 1
@@ -983,8 +977,6 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('A **decrease** in *Tourists Arrivals* to a value lower than 978.0 **does not change** the outcome.')
 
         df_mun_v = df_mun.copy()
         df_mun_v['Tourists Arrivals'] = dm_gva.d._levels[0][1][up_v]
@@ -997,15 +989,11 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('An **increase** in *Tourists Arrivals* to a value greater than 7629.333 **does not change** the outcome.')
 
     ### Local roads density
-    st.markdown('#### Local roads density')
     to_write = True
     if (df_mun['Local roads density'].values[0] == dm_gva.d._levels[1][1][len(dm_gva.d._levels[1][1]) - 2]):
         to_write = False
-        st.markdown('An **improvement** of *Local roads density* will not influence the outcome.')
 
         df_mun_v = df_mun.copy()
         down_v = dm_gva.d._levels[1][1].index(df_mun['Local roads density'].values[0]) - 1
@@ -1019,12 +1007,9 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('The **deterioration** of *Local roads density* to a value between 0.213 and 0.382 **does not change** the outcome.')
     
     if df_mun['Local roads density'].values[0] == dm_gva.d._levels[1][1][0]:
         to_write = False
-        st.markdown('The **deterioration** in *Local roads density* will not influence the outcome.')
 
         df_mun_v = df_mun.copy()
         up_v = dm_gva.d._levels[1][1].index(df_mun['Local roads density'].values[0]) + 1
@@ -1038,8 +1023,7 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('An **improvement** in *Local roads density* to a value between 0.213 and 0.382 **does not change** the outcome.')
+
     if to_write:
         df_mun_v = df_mun.copy()
         up_v = dm_gva.d._levels[1][1].index(df_mun['Local roads density'].values[0]) + 1
@@ -1055,8 +1039,6 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('The **deterioration** in *Local roads density* to a value greater than 0.382 **does not change** the outcome.')
 
         df_mun_v = df_mun.copy()
         df_mun_v['Local roads density'] = dm_gva.d._levels[1][1][up_v]
@@ -1069,15 +1051,11 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('An **improvement** in *Local roads density* to a value lower than 0.213 **does not change** the outcome.')
     
     ### Motorcycles density
-    st.markdown('#### Motorcycles density')
     to_write = True
     if (df_mun['Motorcycles density'].values[0] == dm_gva.d._levels[2][1][len(dm_gva.d._levels[2][1]) - 2]):
         to_write = False
-        st.markdown('The **increase** in *Motorcycles density* will not influence the outcome.')
 
         df_mun_v = df_mun.copy()
         down_v = dm_gva.d._levels[2][1].index(df_mun['Motorcycles density'].values[0]) - 2
@@ -1091,12 +1069,9 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('A **decrease** in *Motorcycles density* to a value between 0.281 and 0.762 **does not change** the outcome.')
     
     if df_mun['Motorcycles density'].values[0] == dm_gva.d._levels[2][1][0]:
         to_write = False
-        st.markdown('The **decrease** in *Motorcycles density* will not influence the outcome.')
 
         df_mun_v = df_mun.copy()
         up_v = dm_gva.d._levels[2][1].index(df_mun['Motorcycles density'].values[0]) + 1
@@ -1110,8 +1085,6 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('An **increase** in *Motorcycles density* to a value between 0.281 and 0.762 **does not change** the outcome.')
     if to_write:
         df_mun_v = df_mun.copy()
         up_v = dm_gva.d._levels[2][1].index(df_mun['Motorcycles density'].values[0]) + 1
@@ -1127,8 +1100,6 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('A **decrease** in *Motorcycles density* to a value lower than 0.281 **does not change** the outcome.')
 
         df_mun_v = df_mun.copy()
         df_mun_v['Motorcycles density'] = dm_gva.d._levels[2][1][up_v]
@@ -1141,15 +1112,11 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('An **increase** in *Motorcycles density* to a value greater than 0.762 **does not change** the outcome.')
 
     ### Vehicles density
-    st.markdown('#### Vehicles density')
     to_write = True
     if (df_mun['Vehicles density'].values[0] == dm_gva.d._levels[3][1][len(dm_gva.d._levels[3][1]) - 1]) | (df_mun['Vehicles density'].values[0] == dm_gva.d._levels[3][1][len(dm_gva.d._levels[3][1]) - 2]):
         to_write = False
-        st.markdown('An **improvement** in *Vehicles density* will not influence the outcome.')
 
         df_mun_v = df_mun.copy()
         down_v = dm_gva.d._levels[3][1].index(df_mun['Vehicles density'].values[0]) - 1
@@ -1163,12 +1130,9 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('A **deterioration** in *Vehicles density* to a value between 10.272 and 21.286 **does not change** the outcome.')
     
     if df_mun['Vehicles density'].values[0] == dm_gva.d._levels[3][1][0]:
         to_write = False
-        st.markdown('The **deterioration** in *Vehicles density* will not influence the outcome.')
 
         df_mun_v = df_mun.copy()
         up_v = dm_gva.d._levels[3][1].index(df_mun['Vehicles density'].values[0]) + 1
@@ -1182,8 +1146,7 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('An **improvement** in *Vehicles density* to a value between 10.272 and 21.286 **does not change** the outcome.')
+
     if to_write:
         df_mun_v = df_mun.copy()
         up_v = dm_gva.d._levels[3][1].index(df_mun['Vehicles density'].values[0]) + 1
@@ -1199,8 +1162,6 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('A **deterioration** in *Vehicles density* to a value lower than 21.286 **does not change** the outcome.')
 
         df_mun_v = df_mun.copy()
         df_mun_v['Vehicles density'] = dm_gva.d._levels[3][1][up_v]
@@ -1213,15 +1174,11 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('An **increase** in *Vehicles density* to a value lower than 10.272 **does not change** the outcome.')
 
     ### Main road accessibility
-    st.markdown('#### Main road accessibility')
     to_write = True
     if (df_mun['Main road accessibility'].values[0] == dm_gva.d._levels[4][1][len(dm_gva.d._levels[4][1]) - 1]):
         to_write = False
-        st.markdown('The **improvement** in *Main road accessibility* will not influence the outcome.')
 
         df_mun_v = df_mun.copy()
         down_v = dm_gva.d._levels[4][1].index(df_mun['Main road accessibility'].values[0]) - 1
@@ -1235,12 +1192,9 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('A **deterioration** in *Main road accessibility* to a value between 5.461 and 13.025 **does not change** the outcome.')
     
     if df_mun['Main road accessibility'].values[0] == dm_gva.d._levels[4][1][0]:
         to_write = False
-        st.markdown('The **deterioration** in *Main road accessibility* will not influence the outcome.')
 
         df_mun_v = df_mun.copy()
         up_v = dm_gva.d._levels[4][1].index(df_mun['Main road accessibility'].values[0]) + 1
@@ -1254,8 +1208,6 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('An **improvement** in *Main road accessibility* to a value between 5.461 and 13.025 **does not change** the outcome.')
     if to_write:
         df_mun_v = df_mun.copy()
         up_v = dm_gva.d._levels[4][1].index(df_mun['Main road accessibility'].values[0]) + 1
@@ -1271,8 +1223,6 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('A **deterioration** in *Main road accessibility* to a value greater than 13.025 **does not change** the outcome.')
 
         df_mun_v = df_mun.copy()
         df_mun_v['Main road accessibility'] = dm_gva.d._levels[4][1][up_v]
@@ -1285,15 +1235,11 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('An **improvement** in *Main road accessibility* to a value lower than 5.461 **does not change** the outcome.')
 
     ### Municipality employment rate
-    st.markdown('#### Municipality employment rate')
     to_write = True
     if (df_mun['Municipality employment rate'].values[0] == dm_gva.d._levels[5][1][len(dm_gva.d._levels[5][1]) - 1]):
         to_write = False
-        st.markdown('The **increase** in *Municipality employment rate* will not influence the outcome.')
 
         df_mun_v = df_mun.copy()
         down_v = dm_gva.d._levels[5][1].index(df_mun['Municipality employment rate'].values[0]) - 1
@@ -1307,12 +1253,9 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('A **decrease** in *Municipality employment rate* to a value between 0.291 and 0.378 **does not change** the outcome.')
     
     if df_mun['Municipality employment rate'].values[0] == dm_gva.d._levels[5][1][0]:
         to_write = False
-        st.markdown('The **decrease** in *Municipality employment rate* will not influence the outcome.')
 
         df_mun_v = df_mun.copy()
         up_v = dm_gva.d._levels[5][1].index(df_mun['Municipality employment rate'].values[0]) + 1
@@ -1326,8 +1269,6 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('An **increase** in *Municipality employment rate* to a value between 0.291 and 0.378 **does not change** the outcome.')
     if to_write:
         df_mun_v = df_mun.copy()
         up_v = dm_gva.d._levels[5][1].index(df_mun['Municipality employment rate'].values[0]) + 1
@@ -1343,8 +1284,6 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('A **decrease** in *Municipality employment rate* to a value lower than 0.291 **does not change** the outcome.')
 
         df_mun_v = df_mun.copy()
         df_mun_v['Municipality employment rate'] = dm_gva.d._levels[5][1][up_v]
@@ -1357,15 +1296,11 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('An **increase** in *Municipality employment rate* to a value greater than 0.378 **does not change** the outcome.')
 
     ### Unemployed rate
-    st.markdown('#### Unemployed rate')
     to_write = True
     if (df_mun['Unemployed rate'].values[0] == dm_gva.d._levels[6][1][len(dm_gva.d._levels[6][1]) - 1]):
         to_write = False
-        st.markdown('The **increase** in *Unemployed rate* will not influence the outcome.')
 
         df_mun_v = df_mun.copy()
         down_v = dm_gva.d._levels[6][1].index(df_mun['Unemployed rate'].values[0]) - 1
@@ -1379,12 +1314,9 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('A **deterioration** in *Unemployed rate* to a value between 77.0 and 122.0 **does not change** the outcome.')
     
     if (df_mun['Unemployed rate'].values[0] == dm_gva.d._levels[6][1][1]):
         to_write = False
-        st.markdown('The **deterioration** in *Unemployed rate* will not influence the outcome.')
 
         df_mun_v = df_mun.copy()
         up_v = dm_gva.d._levels[6][1].index(df_mun['Unemployed rate'].values[0]) + 1
@@ -1398,8 +1330,7 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('An **improvement** in *Unemployed rate* to a value between 77.0 and 122.0 **does not change** the outcome.')
+
     if to_write:
         df_mun_v = df_mun.copy()
         up_v = dm_gva.d._levels[6][1].index(df_mun['Unemployed rate'].values[0]) + 1
@@ -1415,8 +1346,6 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('A **deterioration** in *Unemployed rate* to a value greater than 122.0 **does not change** the outcome.')
 
         df_mun_v = df_mun.copy()
         up_v = dm_gva.d._levels[6][1].index(df_mun['Unemployed rate'].values[0]) + 1
@@ -1430,15 +1359,11 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('An **improvement** in *Unemployed rate* to a value lower than 77.0 **does not change** the outcome.')
 
     ### Active companies rate
-    st.markdown('#### Active companies rate')
     to_write = True
     if (df_mun['Active companies rate'].values[0] == dm_gva.d._levels[6][1][len(dm_gva.d._levels[7][1]) - 1]) | (df_mun['Active companies rate'].values[0] == dm_gva.d._levels[6][1][len(dm_gva.d._levels[7][1]) - 2]):
         to_write = False
-        st.markdown('The **increase** in *Active companies rate* will not influence the outcome.')
 
         df_mun_v = df_mun.copy()
         down_v = dm_gva.d._levels[7][1].index(df_mun['Active companies rate'].values[0]) - 1
@@ -1452,12 +1377,9 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('A **decrease** in *Active companies rate* to a value between 7.755 and 10.985 **does not change** the outcome.')
     
     if df_mun['Active companies rate'].values[0] == dm_gva.d._levels[7][1][0]:
         to_write = False
-        st.markdown('The **decrease** in *Active companies rate* will not influence the outcome.')
 
         df_mun_v = df_mun.copy()
         up_v = dm_gva.d._levels[7][1].index(df_mun['Active companies rate'].values[0]) + 1
@@ -1471,8 +1393,6 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('An **increase** in *Active companies rate* to a value between 7.755 and 10.985 **does not change** the outcome.')
     if to_write:
         df_mun_v = df_mun.copy()
         up_v = dm_gva.d._levels[7][1].index(df_mun['Active companies rate'].values[0]) + 1
@@ -1488,8 +1408,6 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('A **decrease** in *Active companies rate* to a value lower than 7.755 **does not change** the outcome.')
 
         df_mun_v = df_mun.copy()
         df_mun_v['Active companies rate'] = dm_gva.d._levels[7][1][up_v]
@@ -1502,15 +1420,11 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('An **increase** in *Active companies rate* to a value lower than 10.985 **does not change** the outcome.')
 
     ### Transport and storage investments rate
-    st.markdown('#### Transport and storage investments rate')
     to_write = True
     if (df_mun['Transport and storage investments rate'].values[0] == dm_gva.d._levels[8][1][len(dm_gva.d._levels[8][1]) - 1]) | (df_mun['Transport and storage investments rate'].values[0] == dm_gva.d._levels[8][1][len(dm_gva.d._levels[8][1]) - 2]):
         to_write = False
-        st.markdown('The **increase** in *Transport and storage investments rate* will not influence the outcome.')
 
         df_mun_v = df_mun.copy()
         down_v = dm_gva.d._levels[8][1].index(df_mun['Transport and storage investments rate'].values[0]) - 1
@@ -1524,12 +1438,9 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('A **decrease** in *Transport and storage investments rate* to a value 0.562 **does not change** the outcome.')
     
     if df_mun['Transport and storage investments rate'].values[0] == dm_gva.d._levels[8][1][0]:
         to_write = False
-        st.markdown('The **decrease** in *Transport and storage investments rate* will not influence the outcome.')
 
         df_mun_v = df_mun.copy()
         up_v = dm_gva.d._levels[8][1].index(df_mun['Transport and storage investments rate'].values[0]) + 1
@@ -1543,8 +1454,6 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('An **increase** in *Transport and storage investments rate* to a value 0.562 **does not change** the outcome.')
     if to_write:
         df_mun_v = df_mun.copy()
         up_v = dm_gva.d._levels[8][1].index(df_mun['Transport and storage investments rate'].values[0]) + 1
@@ -1560,8 +1469,6 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('A **decrease** in *Transport and storage investments rate* to a value lower than 0.562 **does not change** the outcome.')
 
         df_mun_v = df_mun.copy()
         df_mun_v['Transport and storage investments rate'] = dm_gva.d._levels[8][1][up_v]
@@ -1574,15 +1481,11 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('An **increase** in *Transport and storage investments rate* to a value greater than 0.562 **does not change** the outcome.')
 
     ### Preschool children enrollment rate
-    st.markdown('#### Preschool children enrollment rate')
     to_write = True
     if (df_mun['Preschool children enrollment rate'].values[0] == dm_gva.d._levels[9][1][len(dm_gva.d._levels[9][1]) - 1]) | (df_mun['Preschool children enrollment rate'].values[0] == dm_gva.d._levels[9][1][len(dm_gva.d._levels[9][1]) - 2]):
         to_write = False
-        st.markdown('The **increase** in *Preschool children enrollment rate* will not influence the outcome.')
 
         df_mun_v = df_mun.copy()
         down_v = dm_gva.d._levels[9][1].index(df_mun['Preschool children enrollment rate'].values[0]) - 1
@@ -1596,12 +1499,9 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('A **decrease** in *Preschool children enrollment rate* to a value between 2.086 and 2.682 **does not change** the outcome.')
     
     if df_mun['Preschool children enrollment rate'].values[0] == dm_gva.d._levels[9][1][0]:
         to_write = False
-        st.markdown('The **decrease** in *Preschool children enrollment rate* will not influence the outcome.')
 
         df_mun_v = df_mun.copy()
         up_v = dm_gva.d._levels[9][1].index(df_mun['Preschool children enrollment rate'].values[0]) + 1
@@ -1615,8 +1515,6 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('An **increase** in *Preschool children enrollment rate* to a value between 2.086 and 2.682 **does not change** the outcome.')
     if to_write:
         df_mun_v = df_mun.copy()
         up_v = dm_gva.d._levels[9][1].index(df_mun['Preschool children enrollment rate'].values[0]) + 1
@@ -1632,8 +1530,6 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('A **decrease** in *Preschool children enrollment rate* to a value lower than 2.086 **does not change** the outcome.')
 
         df_mun_v = df_mun.copy()
         df_mun_v['Preschool children enrollment rate'] = dm_gva.d._levels[9][1][up_v]
@@ -1646,15 +1542,11 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('An **increase** in *Preschool children enrollment rate* to a value lower than 2.682 **does not change** the outcome.')
 
     ### Doctors accessibility
-    st.markdown('#### Doctors accessibility')
     to_write = True
     if (df_mun['Doctors accessibility'].values[0] == dm_gva.d._levels[10][1][len(dm_gva.d._levels[10][1]) - 1]) | (df_mun['Doctors accessibility'].values[0] == dm_gva.d._levels[10][1][len(dm_gva.d._levels[10][1]) - 2]):
         to_write = False
-        st.markdown('The **increase** in *Doctors accessibility* will not influence the outcome.')
 
         df_mun_v = df_mun.copy()
         down_v = dm_gva.d._levels[10][1].index(df_mun['Doctors accessibility'].values[0]) - 1
@@ -1668,12 +1560,9 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('A **decrease** in *Doctors accessibility* to a value between 1.3 and 2.1 **does not change** the outcome.')
     
     if df_mun['Doctors accessibility'].values[0] == dm_gva.d._levels[10][1][0]:
         to_write = False
-        st.markdown('The **decrease** in *Doctors accessibility* will not influence the outcome.')
 
         df_mun_v = df_mun.copy()
         up_v = dm_gva.d._levels[10][1].index(df_mun['Doctors accessibility'].values[0]) + 1
@@ -1687,8 +1576,6 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('An **increase** in *Doctors accessibility* to a value between 1.3 and 2.1 **does not change** the outcome.')
     if to_write:
         df_mun_v = df_mun.copy()
         up_v = dm_gva.d._levels[10][1].index(df_mun['Doctors accessibility'].values[0]) + 1
@@ -1704,8 +1591,6 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('A **decrease** in *Doctors accessibility* to a value lower than 1.3 **does not change** the outcome.')
 
         df_mun_v = df_mun.copy()
         df_mun_v['Doctors accessibility'] = dm_gva.d._levels[10][1][up_v]
@@ -1718,5 +1603,3 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
-        else:
-            st.markdown('An **increase** in *Doctors accessibility* to a value lower than 2.1 **does not change** the outcome.')
