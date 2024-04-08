@@ -449,43 +449,43 @@ with tab__5:
         st.markdown('**+1**')
 
     with col11:
-        st.markdown('Main road accessibility')
+        st.markdown('Main road accessibility (&#8595;)')
     with col12:
-        st.markdown('Local roads density')
+        st.markdown('Local roads density (&#8595;)')
     with col13:
-        st.markdown('Main road accessibility and Local roads density lead to - **Local Traffic**')
+        st.markdown('Main road accessibility and Local roads density lead to - **Local Traffic** (&#8593;)')
     with col14:
-        st.markdown('Motorcycles density')
+        st.markdown('Motorcycles density (&#8593;)')
     with col15:
-        st.markdown('Vehicles density')
+        st.markdown('Vehicles density (&#8595;)')
     with col16:
-        st.markdown('Motorcycles density and Vehicles density lead to - **General Traffic**')
+        st.markdown('Motorcycles density and Vehicles density lead to - **General Traffic** (&#8593;)')
     with col17:
-        st.markdown('Local Traffic and General Traffic lead to - **Road and Traffic**')
+        st.markdown('Local Traffic and General Traffic lead to - **Road and Traffic** (&#8593;)')
     with col18:
-        st.markdown('Tourists Arrivals')
+        st.markdown('Tourists Arrivals (&#8593;)')
     with col19:
-        st.markdown('Road and Traffic and Tourists Arrivals lead to - **Tourism and Traffic**')
+        st.markdown('Road and Traffic and Tourists Arrivals lead to - **Tourism and Traffic** (&#8593;)')
     with col110:
-        st.markdown('Preschool children enrollment rate')
+        st.markdown('Preschool children enrollment rate (&#8593;)')
     with col111:
-        st.markdown('Doctors accessibility')
+        st.markdown('Doctors accessibility (&#8593;)')
     with col112:
-        st.markdown('Preschool children enrollment rate and Doctors accessibility lead to - **Social Factors**')
+        st.markdown('Preschool children enrollment rate and Doctors accessibility lead to - **Social Factors** (&#8593;)')
     with col113:
-        st.markdown('Municipality employment rate')
+        st.markdown('Municipality employment rate (&#8593;)')
     with col114:
-        st.markdown('Unemployed rate')
+        st.markdown('Unemployed rate (&#8595;)')
     with col115:
-        st.markdown('Municipality employment rate and Unemployed rate lead to - **Employment State**')
+        st.markdown('Municipality employment rate and Unemployed rate lead to - **Employment State** (&#8593;)')
     with col116:
-        st.markdown('Active companies rate')
+        st.markdown('Active companies rate (&#8593;)')
     with col117:
-        st.markdown('Employment State and Active companies rate lead to - **Economy State**')
+        st.markdown('Employment State and Active companies rate lead to - **Economy State** (&#8593;)')
     with col118:
-        st.markdown('Transport and storage investments rate')
+        st.markdown('Transport and storage investments rate (&#8593;)')
     with col119:
-        st.markdown('Economy State and Transport and storage investments rate lead to - **Economy and Investments**')
+        st.markdown('Economy State and Transport and storage investments rate lead to - **Economy and Investments** (&#8593;)')
 
     with col31:
         annotated_text((pred['Main road accessibility'].map({'1': 'Poor', '2': 'Medium', '3': 'Good'}), '', pred['Main road accessibility'].map({'1': 'red', '2': 'gray', '3': 'lightgreen'})[0]))
