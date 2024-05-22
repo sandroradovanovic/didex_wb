@@ -1,0 +1,320 @@
+:root {
+  --textColor: rgb(49, 51, 63);
+  --titleColor: #223D69;
+  --linkColor: #095FAF;
+  --borderColor: rgba(49, 51, 63, 0.2);
+  --iconColor: #98A0AE;
+  --hoverColor: #F5F5F5;
+  --hoverColor2: rgba(49, 51, 63, 0.1);
+}
+
+h1,
+h2,
+h3 {
+    color: var(--titleColor);
+}
+
+h1 {
+    font-size: 35px;
+}
+
+h2 {
+    font-size: 32px;
+}
+
+h3 {
+    font-size: 30px;
+}
+
+hr {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+#root > div > div > div > a {
+    display: none;
+}
+
+#stDecoration {
+    display: none;
+}
+
+[data-testid="StyledLinkIconContainer"] a {
+    text-decoration: none;
+    color: var(--linkColor);
+}
+
+[data-testid="StyledLinkIconContainer"] a:hover {
+    opacity: 0.7;
+}
+
+[data-testid="stHeader"] {
+    border-bottom: 1px solid var(--borderColor);
+    height: 70px;
+}
+
+[data-testid="stHeader"]::after {
+    content: '';
+    position: fixed;
+    width: 200px;
+    height: 50px;
+    background: url('https://www.worldbank.org/content/dam/wbr/logo/logo-wb-header-en.svg');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    top: 1rem;
+    left: 5rem;
+}
+
+[data-testid="collapsedControl"] {
+    left: 2.5rem;
+    top: 1.2rem;
+    color: var(--iconColor);
+}
+
+[data-testid="stToolbar"] {
+    display: none;
+}
+
+[data-testid="stExpander"] > details {
+    border: 0;
+    border-top: 2px solid var(--borderColor);
+    border-bottom: 2px solid var(--borderColor);
+    border-radius: 0;
+}
+
+[data-testid="stExpander"] [data-testid="stMarkdownContainer"] p {
+    font-size: 20px;
+}
+
+[data-testid="stExpander"] svg {
+    width: 1.7rem;
+    height: 1.7rem;
+    color: var(--iconColor);
+    margin-top: 2px;
+}
+
+[data-testid="stExpander"] .stMarkdown p {
+    font-size: 16px;
+}
+
+.st-bb {
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.st-ba {
+    border-bottom-color: var(--borderColor);
+}
+
+.st-b9 {
+    border-top-color: var(--borderColor);
+}
+
+
+.st-b8 {
+    border-right-color: var(--borderColor);
+}
+
+.st-b7 {
+    border-left-color: var(--borderColor);
+}
+
+.st-bk {
+    padding-right: 0.8rem;
+}
+
+.st-bj {
+    padding-left: 0.8rem;
+}
+
+.st-bi {
+    padding-bottom: 0.2rem;
+}
+
+.st-bh {
+    padding-top: 0.8rem;
+}
+
+.st-bb svg {
+    color: var(--iconColor);
+}
+
+.st-bb:hover svg {
+    opacity: 0.7;
+}
+
+.stSelectbox [data-testid="stMarkdownContainer"] {
+    margin-left: 7px;
+    color: var(--iconColor);
+}
+
+.stSelectbox [data-baseweb="select"] > div {
+    background-color: #fff;
+    border-color: var(--borderColor);
+    height: 46px;
+    line-height: 26px;
+}
+
+.stSelectbox [data-baseweb="select"] svg {
+    color: var(--iconColor);
+    width: 2rem;
+    height: 2rem;
+}
+
+.stMultiSelect [data-baseweb="select"] > div {
+    background-color: #fff;
+    border-color: var(--borderColor);
+    min-height: 46px;
+}
+
+.stMultiSelect [data-baseweb="select"] svg {
+    color: var(--iconColor);
+    width: 2rem;
+    height: 2rem;
+}
+
+/* main menu */
+[data-testid="stSidebar"] {
+    background-color: #fff;
+    border-right: 1px solid var(--borderColor);
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.05);
+}
+
+[data-testid="stSidebarNavLink"] {
+    margin: 0;
+    padding: 0.2rem 1.5rem;
+    border-radius: 0;
+    color: var(--titleColor);
+}
+
+[data-testid="stSidebarNavLink"]:hover {
+    background-color: var(--hoverColor)
+}
+
+[data-testid="stSidebarContent"] > div:first-child {
+    top: 1rem;
+    right: 0.5rem;
+    color: var(--iconColor);
+}
+
+[data-testid="stSidebarContent"]::after {
+    content: '';
+    position: fixed;
+    width: 200px;
+    height: 50px;
+    background: url(https://www.worldbank.org/content/dam/wbr/logo/logo-wb-header-en.svg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    top: 1rem;
+    left: 1.5rem;
+}
+
+[data-testid="baseButton-headerNoPadding"]:hover {
+    background-color: var(--hoverColor2);
+}
+
+[data-testid="stNumberInputContainer"] {
+    border: 1px solid var(--borderColor);
+}
+
+[data-testid="stNumberInputContainer"] button {
+    background-color: transparent;
+}
+
+.stNumberInput input.st-bi {
+    padding-bottom: 0.5rem;
+}
+
+/* TABLE */
+table {
+    border: 0;
+}
+
+table tr td,
+table tr th,
+table thead tr {
+    border: 0;
+}
+
+table thead tr th {
+    text-align: left;
+}
+
+[data-testid="stTableStyledTable"] {
+    border: 0;
+}
+
+[data-testid="stTableStyledTable"] th,
+[data-testid="stTableStyledTable"] td {
+    border-right: 0;
+    font-size: 14px;
+    position: relative;
+}
+
+[data-testid="stTableStyledTable"] td {
+    border-right: 0;
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0 0 0 5px inset #fff;
+    padding: 4px 10px;
+}
+
+[data-testid="stTableStyledTable"] td:after {
+    position: absolute;
+    left: 0px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 0px;
+    border: 5px solid #fff;
+    box-sizing: border-box;
+    content: '';
+}
+
+[data-testid="stTableStyledTable"] th {
+    font-weight: bold;
+    color: var(--textColor);
+}
+
+table.dataframe th,
+table.dataframe td {
+    border: 0;
+}
+
+table.dataframe thead tr {
+    border-top: 0;
+}
+
+.stMultiSelect .st-bb {
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+}
+
+.stMultiSelect .st-bi:not([data-baseweb="tag"]) {
+    padding: 0;
+}
+
+[data-testid="stHorizontalBlock"] {
+    padding-bottom: 25px;
+    margin-bottom: -8px;
+}
+
+[data-testid="stHorizontalBlock"] p {
+    margin-bottom: 0;
+    border: 0;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+[data-testid="stHorizontalBlock"] [data-testid="column"]:last-of-type p {
+    text-align: right;
+}
+
+[data-testid="stHorizontalBlock"] [data-testid="column"] {
+    height: auto;
+    border: 0;
+}

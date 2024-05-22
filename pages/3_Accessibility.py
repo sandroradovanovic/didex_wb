@@ -7,8 +7,12 @@ import plotly.graph_objects as go
 
 import streamlit as st
 
+from page_util import apply_style
+
 st.set_page_config(layout='wide', 
                    page_title = 'Accessibility Attributes')
+
+apply_style()
 
 st.title('Accessibility Attributes')
 

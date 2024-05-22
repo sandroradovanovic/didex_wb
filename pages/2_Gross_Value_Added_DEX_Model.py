@@ -18,6 +18,7 @@ st.set_page_config(layout='wide',
                    page_title = 'Gross Value Added per capita DEX Model')
 
 page_util.hide_table_index()
+page_util.apply_style()
 
 st.title('Gross Value Added per capita DEX Model')
 

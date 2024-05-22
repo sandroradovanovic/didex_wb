@@ -13,6 +13,7 @@ st.set_page_config(layout='wide',
                    page_title = 'Net Internal Migration DEX Model')
 
 page_util.hide_table_index()
+page_util.apply_style()
 
 st.title('Net Internal Migration DEX Model')
 

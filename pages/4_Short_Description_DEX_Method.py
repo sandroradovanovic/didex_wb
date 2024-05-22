@@ -1,5 +1,8 @@
 import streamlit as st
+from page_util import apply_style
+
 st.set_page_config(layout='wide', page_title = 'About DEX Methodology')
+apply_style()
 
 st.title('Short Description of the DEX Methodology')
 

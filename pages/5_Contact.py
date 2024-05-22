@@ -1,7 +1,9 @@
 import streamlit as st
+from page_util import apply_style
 
 st.set_page_config(layout='wide', 
                    page_title = 'Contact')
+apply_style()
 
 st.title('Contact')
 

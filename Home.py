@@ -10,11 +10,14 @@ import numpy as np
 import dex_model as dm
 import dex_model_gva as dm_gva
 
+from page_util import apply_style
+
 st.set_page_config(layout='wide', page_title = 'Home')
 
 st.title('DEX Models for Internal Migration and Gross Value Added per capita Explanation and Potential Suggestions')
 
 st.image('img/world-bank-logo.png', width=300)
+apply_style()
 
 with st.expander('This web app acts as a service to policy- and decision-makers in the local self-governing units or Ministry of Public Administration and Local Self-Government to inspect effects of decisions and/or policies on **net internal migrations** and **gross value added per capita (constant prices)**.'):
     st.markdown('---')
