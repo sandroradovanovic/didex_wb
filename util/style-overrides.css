@@ -90,7 +90,7 @@ hr {
     font-size: 20px;
 }
 
-[data-testid="stExpander"] svg {
+[data-testid="stExpander"] summary svg {
     width: 1.7rem;
     height: 1.7rem;
     color: var(--iconColor);
