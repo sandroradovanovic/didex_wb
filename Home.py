@@ -16,7 +16,7 @@ st.set_page_config(layout='wide', page_title = 'Home')
 
 st.title('DEX Models for Internal Migration and Gross Value Added per capita Explanation and Potential Suggestions')
 
-st.image('img/world-bank-logo.png', width=300)
+# st.image('img/world-bank-logo.png', width=300)
 apply_style()
 
 with st.expander('This web app acts as a service to policy- and decision-makers in the local self-governing units or Ministry of Public Administration and Local Self-Government to inspect effects of decisions and/or policies on **net internal migrations** and **gross value added per capita (constant prices)**.'):
@@ -1607,9 +1607,4 @@ with st.expander('Details'):
             else:
                 annotated_text((prediction_n, '', 'gray'))
 
-st.markdown('---')
-col1, col2, _ = st.columns(3)
-with col1:
-    st.image('img/image001.png', width=225)
-with col2:
-    st.image('img/image002.png')
+st.image('img/image_3.png')
