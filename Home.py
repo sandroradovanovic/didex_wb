@@ -1606,3 +1606,10 @@ with st.expander('Details'):
                 annotated_text((prediction_n, '', 'lightgreen'))
             else:
                 annotated_text((prediction_n, '', 'gray'))
+
+st.markdown('---')
+col1, col2, _ = st.columns(3)
+with col1:
+    st.image('img/image001.png', width=225)
+with col2:
+    st.image('img/image002.png')
